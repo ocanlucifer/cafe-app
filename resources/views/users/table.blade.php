@@ -2,6 +2,7 @@
     <table class="table table-bordered table-striped table-hover table-sm">
         <thead class="table-dark">
             <tr>
+                <th class="col-0">No.</th>
                 <th class="col-3">
                     <a href="#" class="sortable nav-link" data-sort-by="name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
                         Name
@@ -48,6 +49,7 @@
         <tbody>
             @foreach ($users as $user)
             <tr>
+                <td class="text-center">{{ $loop->iteration }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>

@@ -26,9 +26,11 @@ class ItemController extends Controller
                             ->orWhere('items.stock', 'LIKE', "%$search%")
                             ->orWhereHas('category', function ($query2) use ($search) {
                                 $query2->where('categories.name', 'LIKE', "%$search%");  // Specify categories.name
+                            })
+                            ->orWhereHas('type', function ($query3) use ($search) {
+                                $query3->where('types.name', 'LIKE', "%$search%");  // Specify types.name
                             });
             })
-            ->IsItem()
             ->with(['category', 'type']);
 
         // Handle sorting logic
@@ -37,6 +39,11 @@ class ItemController extends Controller
             $query->join('categories', 'items.category_id', '=', 'categories.id')
                 ->select('items.*', 'categories.name as category_name')  // Select items columns and alias category.name
                 ->orderBy('categories.name', $order);  // Sort by the category's name column
+        } else if($sortBy === 'type_name') {
+            // If sorting by type_name, join with types table and order by category name
+            $query->join('types', 'items.type_id', '=', 'types.id')
+                ->select('items.*', 'types.name as type_name')  // Select items columns and alias type.name
+                ->orderBy('types.name', $order);  // Sort by the type's name column
         } else {
             // Otherwise, use the normal sortBy (e.g., 'name', 'price', etc.)
             $query->select('items.*')  // Select only items columns if sorting by item fields
@@ -45,21 +52,22 @@ class ItemController extends Controller
 
         // Get paginated results
         $items = $query->paginate($perPage);
-        $categories = Category::get();
+        $categories = Category::All();
+        $types = Type::All();
 
         // If the request is an AJAX request, return only the table view
         if ($request->ajax()) {
-            return view('items.table', compact('items', 'search', 'sortBy', 'order', 'perPage', 'categories'));
+            return view('items.table', compact('items', 'search', 'sortBy', 'order', 'perPage', 'categories', 'types'));
         }
 
         // Return the full page view
-        return view('items.index', compact('items', 'search', 'sortBy', 'order', 'perPage', 'categories'));
+        return view('items.index', compact('items', 'search', 'sortBy', 'order', 'perPage', 'categories', 'types'));
     }
 
     public function create()
     {
-        $categories = Category::where('id', 6)->get();
-        $types = Type::where('id', 2)->get();
+        $categories = Category::All();
+        $types = Type::All();
         return view('items.create', compact('categories', 'types'));
     }
 
@@ -68,13 +76,14 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'type_id' => 'required|exists:types,id',
             'price' => 'required|numeric',
             'active' => 'required|boolean', // Validasi kolom active
         ]);
         Item::create([
             'name'  => $request->name,
             'category_id'   => $request->category_id,
-            'type_id'       => 2,
+            'type_id'       => $request->type_id,
             'price'         => $request->price,
             'stock'         => 0,
             'active'        => $request->active ?? true,
@@ -86,8 +95,8 @@ class ItemController extends Controller
 
     public function edit(Item $item)
     {
-        $categories = Category::where('id', 6)->get();
-        $types = Type::where('id', 2)->get();
+        $categories = Category::All();
+        $types = Type::All();
         return view('items.edit', compact('item', 'categories', 'types'));
     }
 
@@ -96,13 +105,14 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'type_id' => 'required|exists:types,id',
             'price' => 'required|numeric',
             'active' => 'required|boolean', // Validasi kolom active
         ]);
         $item->update([
             'name'  => $request->name,
             'category_id'   => $request->category_id,
-            'type_id'       => 2,
+            'type_id'       => $request->type_id,
             'price'         => $request->price,
             'active'        => $request->active ?? true,
         ]);

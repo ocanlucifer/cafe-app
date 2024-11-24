@@ -118,6 +118,7 @@
         footer a:hover {
             color: #f8f9fa; /* Lighter shade on hover */
         }
+
     </style>
     @stack('styles')
 </head>
@@ -160,6 +161,7 @@
                     <ul class="dropdown-menu" aria-labelledby="transaksiDropdown">
                         <li><a class="dropdown-item" href="{{ route('sales.index') }}"><i class="fas fa-cash-register"></i> Sales</a></li>
                         <li><a class="dropdown-item" href="{{ route('purchases.index') }}"><i class="fas fa-shopping-cart"></i> Purchases</a></li>
+                        <li><a class="dropdown-item" href="{{ route('issuings.index') }}"><i class="fas fa-dolly"></i> Issuing</a></li>
                     </ul>
                 </li>
 
@@ -169,8 +171,8 @@
                         <i class="fas fa-chart-bar"></i> Report
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="reportDropdown">
-                        <li><a class="dropdown-item" href="{{ route('reports.sales') }}"><i class="fas fa-chart-line"></i> Sales Report</a></li>
-                        <li><a class="dropdown-item" href="{{ route('reports.inventory') }}"><i class="fas fa-chart-pie"></i> Inventory Report</a></li>
+                        <li><a class="dropdown-item" href="{{ route('penjualan.reports') }}"><i class="fas fa-chart-line"></i> Sales Report</a></li>
+                        <li><a class="dropdown-item" href="{{ route('stock-mutations') }}"><i class="fas fa-sync-alt"></i> Stock Mutations</a></li>
                     </ul>
                 </li>
                 <!-- User Account Dropdown -->

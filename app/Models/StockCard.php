@@ -10,7 +10,14 @@ class StockCard extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['item_id', 'quantity_in', 'quantity_out'];
+    protected $fillable = [
+        'item_id',
+        'transaction_number',
+        'qty_begin',
+        'qty_in',
+        'qty_out',
+        'qty_end'
+    ];
 
     public function item()
     {

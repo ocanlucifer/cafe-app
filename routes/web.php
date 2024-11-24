@@ -10,11 +10,11 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\IssuingController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StockMutationController;
 
 
 
@@ -69,18 +69,26 @@ Route::middleware('auth')->group(function () {
         Route::post('/customers/{customer}/toggle-active', [CustomerController::class, 'toggleActive'])->name('customers.toggleActive');
 
 
-    // Inventory Routes
-    Route::resource('inventories', InventoryController::class);
-
     // Purchase Routes
     Route::resource('purchases', PurchaseController::class);
 
+    // Issuing Routes
+    Route::resource('issuings', IssuingController::class);
+
     // Sale Routes
     Route::resource('sales', SaleController::class);
+    Route::get('/sales/{id}/print-pdf', [SaleController::class, 'printPDF'])->name('sales.print-pdf');
+
 
     // Report Routes
-    Route::get('reports/sales', [ReportController::class, 'salesReport'])->name('reports.sales');
-    Route::get('reports/inventory', [ReportController::class, 'inventoryReport'])->name('reports.inventory');
+    // Route untuk menampilkan laporan penjualan
+    Route::get('/penjualan/reports', [SaleController::class, 'generateSalesReport'])->name('penjualan.reports');
+    Route::get('/penjualan/printReportPDF', [SaleController::class, 'printReportPDF'])->name('penjualan.printReportPDF');
+
+    //route report mutasi
+    Route::get('/stock-mutations', [StockMutationController::class, 'index'])->name('stock-mutations');
+    Route::post('/stock-mutations/fetch', [StockMutationController::class, 'fetchData'])->name('stock-mutations.fetch');
+
 
 });
 

@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('stock_cards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity_in');
-            $table->integer('quantity_out');
+            $table->string('transaction_number');
+            $table->integer('qty_begin');
+            $table->integer('qty_in');
+            $table->integer('qty_out');
+            $table->integer('qty_end');
             $table->timestamps();
         });
     }
