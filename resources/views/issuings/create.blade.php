@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-md-8">
-            <h3 class="display-6">Create New Purchase</h3>
+            <h3 class="display-6">Create New Issuing Transaction</h3>
         </div>
         <div class="col-md-4 text-end">
-            <a href="{{ route('purchases.index') }}" class="btn btn-secondary btn-sm">
+            <a href="{{ route('issuings.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-chevron-left"></i>
                 Back to Transaction List
             </a>
@@ -24,25 +24,27 @@
             </ul>
         </div>
     @endif
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {!! session('error') !!}
+        </div>
+    @endif
 
-    <form action="{{ route('purchases.store') }}" method="POST" id="purchase-form">
+    <form action="{{ route('issuings.store') }}" method="POST" id="issuing-form">
         @csrf
 
-        {{-- Vendor and Purchase Date --}}
+        {{-- User and Transaction Date --}}
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="vendor_id" class="form-label">Vendor</label>
-                <select name="vendor_id" id="vendor_id" class="form-control" required>
-                    <option value="">Select Vendor</option>
-                    @foreach($vendors as $vendor)
-                        <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
-                    @endforeach
-                </select>
+                <label for="transaction_date" class="form-label">Transaction Date</label>
+                <input type="datetime-local" name="transaction_date" id="transaction_date" class="form-control" value="{{ old('transaction_date', now()->format('Y-m-d\TH:i')) }}" required>
             </div>
-            <div class="col-md-6">
-                <label for="purchase_date" class="form-label">Purchase Date</label>
-                <input type="datetime-local" name="purchase_date" id="purchase_date" class="form-control" value="{{ old('purchase_date', now()->format('Y-m-d\TH:i')) }}" required>
-            </div>
+        </div>
+
+        {{-- Remarks --}}
+        <div class="mb-3">
+            <label for="remarks" class="form-label">Remarks</label>
+            <textarea name="remarks" id="remarks" class="form-control" rows="3">{{ old('remarks') }}</textarea>
         </div>
 
         {{-- Item Details --}}
@@ -59,27 +61,25 @@
                     <tr>
                         <th>#</th>
                         <th>Item Name</th>
-                        <th>Price</th>
                         <th>Quantity</th>
-                        <th>Total Price</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="items-container">
                     <tr id="empty-row">
-                        <td colspan="6" class="text-center">No items added</td>
+                        <td colspan="4" class="text-center">No items added</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        {{-- Total Amount --}}
+        {{-- Total Quantity --}}
         <div class="mb-3">
-            <label for="total_amount" class="form-label">Total Amount</label>
-            <input type="number" name="total_amount" id="total_amount" class="form-control" readonly>
+            <label for="total_quantity" class="form-label">Total Quantity</label>
+            <input type="number" name="total_quantity" id="total_quantity" class="form-control" readonly>
         </div>
 
-        <button type="submit" class="btn btn-success">Save Purchase</button>
+        <button type="submit" class="btn btn-success">Save Issuing</button>
     </form>
 </div>
 
@@ -106,12 +106,8 @@
                 </select>
             </td>
             <td>
-                <input type="number" name="items[${itemIndex}][price]" class="form-control item-price-input" value="0" min="0" required>
-            </td>
-            <td>
                 <input type="number" name="items[${itemIndex}][quantity]" class="form-control item-quantity" value="1" min="1" required>
             </td>
-            <td class="item-total-price">Rp 0.00</td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm remove-item">
                     <i class="bi bi-trash"></i>
@@ -121,7 +117,7 @@
 
         container.appendChild(newRow);
         itemIndex++;
-        updateTotalAmount();
+        updateTotalQuantity();
     });
 
     // Remove Item
@@ -129,55 +125,32 @@
         if (e.target.closest('.remove-item')) {
             const row = e.target.closest('tr');
             row.remove();
-            updateTotalAmount();
+            updateTotalQuantity();
 
             if (document.querySelectorAll('#items-container tr').length === 0) {
                 document.getElementById('items-container').innerHTML = `
                     <tr id="empty-row">
-                        <td colspan="6" class="text-center">No items added</td>
+                        <td colspan="4" class="text-center">No items added</td>
                     </tr>
                 `;
             }
         }
     });
 
-    // Update Total Amount
-    document.getElementById('items-container').addEventListener('input', updateTotalAmount);
+    // Update Total Quantity
+    document.getElementById('items-container').addEventListener('input', updateTotalQuantity);
 
-    // Event listener for when an item is selected from the dropdown
-    document.getElementById('items-container').addEventListener('change', (e) => {
-        if (e.target.closest('.item-select')) {
-            const select = e.target;
-            const selectedOption = select.selectedOptions[0];
-            const price = parseFloat(selectedOption.getAttribute('data-price') || 0);
-
-            // Get the price input for this row and set the price
-            const priceInput = select.closest('tr').querySelector('.item-price-input');
-            priceInput.value = price;
-
-            updateTotalAmount();
-        }
-    });
-
-    function updateTotalAmount() {
-        let totalAmount = 0;
+    function updateTotalQuantity() {
+        let totalQuantity = 0;
 
         document.querySelectorAll('#items-container tr').forEach(row => {
-            const priceInput = row.querySelector('.item-price-input');
-            let price = parseFloat(priceInput.value || 0);
-
             const quantityInput = row.querySelector('.item-quantity');
             const quantity = parseInt(quantityInput.value || 1);
 
-            const totalPrice = price * quantity;
-
-            // Update displayed total price for each row
-            row.querySelector('.item-total-price').textContent = `Rp ${totalPrice.toLocaleString('id-ID', { minimumFractionDigits: 2 })}`;
-
-            totalAmount += totalPrice;
+            totalQuantity += quantity;
         });
 
-        document.getElementById('total_amount').value = totalAmount.toFixed(2);
+        document.getElementById('total_quantity').value = totalQuantity;
     }
 </script>
 

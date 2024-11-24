@@ -14,10 +14,11 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         Type::create([
-            'name' => 'Item',
+            'name' => 'Vegetarian',
         ]);
         Type::create([
-            'name' => 'Bahan',
+            'name' => 'Non-Vegetarian',
         ]);
+
     }
 }

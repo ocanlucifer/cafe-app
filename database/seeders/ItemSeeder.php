@@ -17,29 +17,60 @@ class ItemSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        // Daftar bahan makanan dan minuman realistis
+        $foodItems = [
+            'Beras', 'Gula Pasir', 'Minyak Goreng', 'Tepung Terigu', 'Telur Ayam',
+            'Daging Sapi', 'Daging Ayam', 'Ikan Tenggiri', 'Susu UHT', 'Kedelai',
+            'Bawang Merah', 'Bawang Putih', 'Tomat', 'Cabai Merah', 'Kentang',
+            'Wortel', 'Kol', 'Garam', 'Kecap Manis', 'Saus Tomat', 'Saos Sambal',
+            'Susu Cair', 'Keju Cheddar', 'Roti Tawar', 'Yoghurt', 'Krimer',
+            'Coklat Bubuk', 'Vanili', 'Kacang Tanah', 'Kacang Merah', 'Jagung Manis'
+        ];
+
+        $drinkItems = [
+            'Air Mineral', 'Es Batu', 'Teh Celup', 'Kopi Bubuk', 'Jus Jeruk',
+            'Soda', 'Susu Coklat', 'Jus Mangga', 'Jus Apel', 'Teh Hijau',
+            'Minuman Energi', 'Minuman Lemon', 'Es Krim', 'Sirup Gula', 'Minuman Kopi'
+        ];
+
+        // Gabungkan kedua daftar (Bahan Makanan dan Minuman)
+        $allItems = array_merge($foodItems, $drinkItems);
+        $existingNames = [];
+
         $items = [];
 
         for ($i = 0; $i < 100; $i++) {
-            // Set type_id: 70% chance of type_id = 2, 30% chance of type_id = 1
+            // Pilih bahan dari daftar yang sudah disediakan
+            $itemName = $faker->randomElement($allItems);
+
+            // 70% chance of type_id = 2 (minuman), 30% chance of type_id = 1 (makanan)
             $type_id = ($i < 70) ? 2 : 1;
 
-            // If type_id = 2, set category_id to 6 (Bahan Makanan/Minuman)
-            $category_id = ($type_id === 2) ? 6 : rand(1, 5);
+            // Set category_id ke 6 untuk bahan makanan/minuman
+            $category_id = 6;
 
-            // Create an item with stock = 0, price, active status
-            $items[] = [
-                'name' => $faker->word,                         // Random name for the item
-                'category_id' => $category_id,                   // Category ID: if type_id = 2, category_id = 6, else random between 1 and 5
-                'type_id' => $type_id,                           // Random type_id (70% = 2, 30% = 1)
-                'price' => $faker->randomFloat(2, 10, 500),      // Random price between 10 and 500
-                'stock' => 0,                                    // Set stock to 0
-                'active' => $faker->boolean,                     // Random active status (true or false)
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+            // Cek apakah sudah ada item dengan nama yang sama dan active = true
+            if (!in_array($itemName, $existingNames)) {
+                // Tambahkan item baru ke array
+                $items[] = [
+                    'name' => $itemName,                          // Nama bahan
+                    'category_id' => $category_id,                // ID kategori
+                    'type_id' => $type_id,                        // ID tipe (minuman atau makanan)
+                    'price' => $faker->randomFloat(2, 5000, 10000),    // Harga acak antara 5000 dan 10000
+                    'stock' => 0,                                 // Set stok awal ke 0
+                    'active' => true,                             // Pastikan status aktif
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+
+                // Simpan nama item yang sudah dimasukkan
+                $existingNames[] = $itemName;
+            }
         }
 
-        // Insert the generated items into the database
-        DB::table('items')->insert($items);
+        // Insert data ke dalam tabel items jika ada data yang valid
+        if (count($items) > 0) {
+            DB::table('items')->insert($items);
+        }
     }
 }

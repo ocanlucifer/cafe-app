@@ -2,7 +2,8 @@
     <table class="table table-bordered table-striped table-hover table-sm">
         <thead class="table-dark">
             <tr>
-                <th class="col-2">
+                <th class="col-0">No.</th>
+                <th class="col-3">
                     <a href="#" class="sortable nav-link" data-sort-by="name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
                         Name
                         @if ($sortBy === 'name')
@@ -14,6 +15,14 @@
                     <a href="#" class="sortable nav-link" data-sort-by="category_name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
                         Category
                         @if ($sortBy === 'category_name')
+                            <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
+                        @endif
+                    </a>
+                </th>
+                <th class="col-2">
+                    <a href="#" class="sortable nav-link" data-sort-by="type_name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
+                        Type
+                        @if ($sortBy === 'type_name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
                     </a>
@@ -34,14 +43,16 @@
                         @endif
                     </a>
                 </th>
-                <th class="col-1 text-center">Actions</th>
+                <th class="col-2 text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($menus as $menu)
                 <tr>
+                    <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{ $menu->name }}</td>
                     <td>{{ $menu->category->name }}</td>
+                    <td>{{ $menu->type->name }}</td>
                     <td>{{ number_format($menu->price, 2) }}</td>
                     <td class="text-center">
                         <span class="badge {{ $menu->active ? 'bg-success' : 'bg-danger' }}">
@@ -49,7 +60,7 @@
                         </span>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-warning edit-menu" data-id="{{ $menu->id }}" data-name="{{ $menu->name }}" data-category_id="{{ $menu->category_id }}" data-price="{{ $menu->price }}" data-active="{{ $menu->active }}" data-bs-toggle="tooltip" title="Delete Menu">
+                        <button class="btn btn-sm btn-warning edit-menu" data-id="{{ $menu->id }}" data-name="{{ $menu->name }}" data-category_id="{{ $menu->category_id }}" data-type_id="{{ $menu->type_id }}"  data-price="{{ $menu->price }}" data-active="{{ $menu->active }}" data-bs-toggle="tooltip" title="Edit Menu">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                         <button class="btn btn-sm btn-danger delete-menu" data-id="{{ $menu->id }}" data-bs-toggle="tooltip" title="Delete Menu">

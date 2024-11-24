@@ -3,15 +3,15 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Purchase List</h1>
-        <a href="{{ route('purchases.create') }}" class="btn btn-primary btn-sm">Create New Purchase</a>
+        <h1 class="mb-0">Issuing List</h1>
+        <a href="{{ route('issuings.create') }}" class="btn btn-primary btn-sm">Create New Issuing</a>
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by transaction number or vendor name" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by transaction number" id="search" value="{{ $search }}">
             </div>
             <div class="col-md-2 col-sm-6">
                 <input type="date" name="from_date" class="form-control form-control-sm" value="{{ $fromDate }}">
@@ -21,7 +21,6 @@
             </div>
             <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
                 <option value="transaction_number" {{ $sortBy == 'transaction_number' ? 'selected' : '' }}>Transaction Number</option>
-                <option value="vendor_name" {{ $sortBy == 'vendor_name' ? 'selected' : '' }}>Vendor Name</option>
                 <option value="created_at" {{ $sortBy == 'created_at' ? 'selected' : '' }}>Date</option>
             </select>
             <select name="order" id="order" class="form-select form-select-sm" hidden>
@@ -40,7 +39,7 @@
 
     <!-- Table Container -->
     <div id="table-container">
-        @include('purchases.table')  <!-- Include the table partial view here -->
+        @include('issuings.table')  <!-- Include the table partial view here -->
     </div>
 </div>
 @endsection
@@ -49,11 +48,11 @@
 <script>
     $(document).ready(function() {
         // Function to fetch and reload the table
-        function fetchPurchases() {
+        function fetchIssuings() {
             const formData = $('#filter-form').serialize();
 
             $.ajax({
-                url: "{{ route('purchases.index') }}",
+                url: "{{ route('issuings.index') }}",
                 method: "GET",
                 data: formData,
                 success: function(response) {
@@ -67,22 +66,22 @@
             e.preventDefault();
             $('#sort_by').val($(this).data('sort-by'));
             $('#order').val($(this).data('order'));
-            fetchPurchases();
+            fetchIssuings();
         });
 
         // Trigger search when typing in search input
         $('#filter-form').on('keyup', '#search', function() {
-            fetchPurchases();  // Fetch purchase data on every keyup event
+            fetchIssuings();  // Fetch issuing data on every keyup event
         });
 
         // Event listener for changes in form inputs (pagination, per page)
         $('#filter-form').on('change', 'select', function() {
-            fetchPurchases();  // Fetch purchase data on any form input change
+            fetchIssuings();  // Fetch issuing data on any form input change
         });
 
         // Event listener for changes in date inputs
         $('#filter-form').on('change', 'input[type="date"]', function() {
-            fetchPurchases();  // Fetch purchase data on any form input change
+            fetchIssuings();  // Fetch issuing data on any form input change
         });
 
         // Event listener for pagination links

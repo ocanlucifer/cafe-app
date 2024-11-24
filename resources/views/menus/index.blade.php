@@ -17,12 +17,13 @@
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name, category, or price" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name, category, type, or price" id="search" value="{{ $search }}">
             </div>
             {{-- <div class="col-md-2 col-sm-6"> --}}
                 <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
                     <option value="name" {{ $sortBy == 'name' ? 'selected' : '' }}>Name</option>
                     <option value="category_name" {{ $sortBy == 'category_name' ? 'selected' : '' }}>Category</option>
+                    <option value="type_name" {{ $sortBy == 'type_name' ? 'selected' : '' }}>Type</option>
                     <option value="price" {{ $sortBy == 'price' ? 'selected' : '' }}>Price</option>
                     <option value="active" {{ $sortBy == 'active' ? 'selected' : '' }}>Status</option>
                 </select>
@@ -69,6 +70,14 @@
                             <select name="category_id" id="menu-category_id" class="form-select" required>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-type_id" class="form-label">Type</label>
+                            <select name="type_id" id="menu-type_id" class="form-select" required>
+                                @foreach ($types as $type)
+                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -163,6 +172,7 @@
             $('#menu-id').val(menu.id);
             $('#menu-name').val(menu.name);
             $('#menu-category_id').val(menu.category_id);
+            $('#menu-type_id').val(menu.type_id);
             $('#menu-price').val(menu.price);
             $('#menu-status').val(menu.active);
             $('#menuModal').modal('show');

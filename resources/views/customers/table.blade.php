@@ -1,7 +1,8 @@
 <table class="table table-striped table-bordered table-sm">
     <thead class="table-dark">
         <tr>
-            <th class="col-2">
+            <th class="col-0">No.</th>
+            <th class="col-3">
                 <a href="#" class="sortable nav-link" data-sort-by="name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
                     Name
                     @if ($sortBy === 'name')
@@ -33,12 +34,13 @@
                     @endif
                 </a>
             </th>
-            <th class="col-1 text-center">Actions</th>
+            <th class="col-2 text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
         @forelse ($customers as $customer)
             <tr>
+                <td class="text-center">{{ $loop->iteration }}</td>
                 <td>{{ $customer->name }}</td>
                 <td>{{ $customer->contact }}</td>
                 <td>{{ $customer->address }}</td>

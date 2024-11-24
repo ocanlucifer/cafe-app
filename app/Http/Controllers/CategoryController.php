@@ -37,7 +37,6 @@ class CategoryController extends Controller
         $categories = Category::when($search, function($query, $search) {
                 return $query->where('name', 'like', '%' . $search . '%');
             })
-            ->IsNotItem()
             ->orderBy($sortBy, $order)
             ->paginate($perPage);
 

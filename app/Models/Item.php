@@ -22,15 +22,15 @@ class Item extends Model
         return $this->belongsTo(Type::class);
     }
 
-    public function scopeIsItem($query)
-    {
-        return $query->where('type_id', 2);
-    }
+    // public function scopeIsItem($query)
+    // {
+    //     return $query->where('type_id', 2);
+    // }
 
-    public function scopeIsMenu($query)
-    {
-        return $query->where('type_id','<>', 2);
-    }
+    // public function scopeIsMenu($query)
+    // {
+    //     return $query->where('type_id','<>', 2);
+    // }
 
 }
 
