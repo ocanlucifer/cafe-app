@@ -10,24 +10,28 @@
     </style>
 </head>
 <body>
-    <h1>Sales Report (Per Customer)</h1>
+    <h1>Stock Mutations Report</h1>
     <p><strong>Period:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
     <table>
         <thead>
             <tr>
-                <th>Customer</th>
-                <th>Total Sales</th>
-                <th>Total Discount</th>
-                <th>Total After Discount</th>
+                <th>No.</th>
+                <th>Item</th>
+                <th>Begin Quantity</th>
+                <th>In Quantity</th>
+                <th>Out Quantity</th>
+                <th>End Quantity</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($sales as $sale)
+            @foreach($stockMutations as $stockMutation)
             <tr>
-                <td>{{ $sale->customer->name }}</td>
-                <td>Rp {{ number_format($sale->total_price, 2) }}</td>
-                <td>Rp {{ number_format($sale->discount, 2) }}</td>
-                <td>Rp {{ number_format($sale->total_price - $sale->discount, 2) }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $stockMutation->name }}</td>
+                <td>{{ number_format($stockMutation->qty_begin) }}</td>
+                <td>{{ number_format($stockMutation->qty_in) }}</td>
+                <td>{{ number_format($stockMutation->qty_out) }}</td>
+                <td>{{ number_format($stockMutation->qty_end) }}</td>
             </tr>
             @endforeach
         </tbody>

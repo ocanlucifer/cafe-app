@@ -156,7 +156,7 @@
                 <!-- Transaksi Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transaksiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-exchange-alt"></i> Transaksi
+                        <i class="fas fa-exchange-alt"></i> Tansactions
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transaksiDropdown">
                         <li><a class="dropdown-item" href="{{ route('sales.index') }}"><i class="fas fa-cash-register"></i> Sales</a></li>
@@ -172,6 +172,8 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="reportDropdown">
                         <li><a class="dropdown-item" href="{{ route('penjualan.reports') }}"><i class="fas fa-chart-line"></i> Sales Report</a></li>
+                        <li><a class="dropdown-item" href="{{ route('pembelian.reports') }}"><i class="fas fa-credit-card"></i> Purchase Report</a></li>
+                        <li><a class="dropdown-item" href="{{ route('pengeluaran.reports') }}"><i class="fas fa-truck"></i> Issuing Report</a></li>
                         <li><a class="dropdown-item" href="{{ route('stock-mutations') }}"><i class="fas fa-sync-alt"></i> Stock Mutations</a></li>
                     </ul>
                 </li>

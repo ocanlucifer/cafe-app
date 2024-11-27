@@ -85,9 +85,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/penjualan/reports', [SaleController::class, 'generateSalesReport'])->name('penjualan.reports');
     Route::get('/penjualan/printReportPDF', [SaleController::class, 'printReportPDF'])->name('penjualan.printReportPDF');
 
+    // Route untuk menampilkan laporan penjualan
+    Route::get('/pembelian/reports', [PurchaseController::class, 'generateReport'])->name('pembelian.reports');
+    Route::get('/pembelian/printReportPDF', [PurchaseController::class, 'printReportPDF'])->name('pembelian.printReportPDF');
+
+    // Route untuk menampilkan laporan penjualan
+    Route::get('/pengeluaran/reports', [IssuingController::class, 'generateReport'])->name('pengeluaran.reports');
+    Route::get('/pengeluaran/printReportPDF', [IssuingController::class, 'printReportPDF'])->name('pengeluaran.printReportPDF');
+
     //route report mutasi
     Route::get('/stock-mutations', [StockMutationController::class, 'index'])->name('stock-mutations');
-    Route::post('/stock-mutations/fetch', [StockMutationController::class, 'fetchData'])->name('stock-mutations.fetch');
+    Route::get('/stock-mutations/printReportPDF', [StockMutationController::class, 'printReportPDF'])->name('stock-mutations.printReportPDF');
 
 
 });
