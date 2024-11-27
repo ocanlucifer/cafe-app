@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\SalesExport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\SalesExport;
 
 class SaleController extends Controller
 {
@@ -275,48 +275,37 @@ class SaleController extends Controller
         $fromDate = $fromDate->startOfDay();  // 00:00:00
         $toDate = $toDate->endOfDay();  // 23:59:59
 
+        $perPage = $request->get('per_page', 10); // Default to 10 per page
+
         // Ambil filter pilihan grup
         $group = $request->input('group', 'customer'); // Default 'customer'
 
-        // Ambil data sales berdasarkan rentang tanggal
-        $salesQuery = Sale::with(['customer', 'details.menuItem'])
-            ->whereBetween('created_at', [$fromDate, $toDate]);
-
-        // Jika memilih per customer
+        // Default: laporan per customer
         if ($group == 'customer') {
-            $sales = $salesQuery->get(); // Ambil semua sales per customer
+            $sales = Sale::select('customer_id',
+                                   DB::raw('SUM(sales.total_price) as total_sales'),
+                                   DB::raw('SUM(sales.discount) as total_discount'),
+                                )
+            ->with(['customer', 'details' => function ($query) {
+                $query->select('sales_id', DB::raw('SUM(discount) as total_item_discount'))
+                    ->groupBy('sales_id');
+            }])
+            ->whereBetween('sales.created_at', [$fromDate, $toDate])
+            ->groupBy('sales.customer_id')
+            ->paginate($perPage);
         }
 
-        // Jika memilih per item
         if ($group == 'item') {
-            // Grouping berdasarkan item
-            $items = MenuItem::with(['salesDetails' => function($query) use ($fromDate, $toDate) {
-                $query->whereHas('sale', function($q) use ($fromDate, $toDate) {
-                    $q->whereBetween('created_at', [$fromDate, $toDate]);
-                });
-            }])
-            ->get()
-            ->map(function($item) {
-                // Hitung total quantity dan total sales per item
-                $totalQuantity = $item->salesDetails->sum('quantity');
-                $totalSales = $item->salesDetails->sum(function($detail) {
-                    return $detail->subtotal;
-                });
-
-                // Hanya kembalikan item yang memiliki total quantity lebih dari 0
-                if ($totalQuantity > 0) {
-                    return (object)[
-                        'name' => $item->name,
-                        'total_quantity' => $totalQuantity,
-                        'total_sales' => $totalSales
-                    ];
-                }
-
-                // Jika quantity tidak lebih dari 0, kembalikan null
-                return null;
-            })
-            ->filter() // Filter item yang bernilai null (yaitu item dengan quantity 0)
-            ->values(); // Reindex array setelah filter
+            // Query untuk grup berdasarkan item
+            $items = MenuItem::select('menu_items.name')
+                ->join('sales_details', 'menu_items.id', '=', 'sales_details.menu_item_id')
+                ->join('sales', 'sales_details.sales_id', '=', 'sales.id')
+                ->whereBetween('sales.created_at', [$fromDate, $toDate])
+                ->selectRaw('SUM(sales_details.quantity) as total_quantity')
+                ->selectRaw('SUM(sales_details.subtotal) as total_sales')
+                ->groupBy('menu_items.name')
+                ->having('total_quantity', '>', 0) // Hanya ambil item dengan total quantity > 0
+                ->paginate($perPage);
 
             // Jika tombol export ditekan
             if ($request->has('export') && $request->input('export') == 'excel') {
@@ -328,8 +317,15 @@ class SaleController extends Controller
                 return Excel::download(new SalesExport($sales), 'sales_report.xlsx');
             }
 
-            return view('sales.report', compact('items', 'fromDate', 'toDate', 'group'));
+            if ($request->ajax()) {
+                return response()->json([
+                    'html' => view('sales.reports.partials.item_table', compact('items', 'fromDate', 'toDate', 'group', 'perPage'))->render()
+                ]);
+            }
+
+            return view('sales.reports.report', compact('items', 'fromDate', 'toDate', 'group', 'perPage'));
         }
+
 
         // Jika tombol export ditekan
         if ($request->has('export') && $request->input('export') == 'excel') {
@@ -341,8 +337,13 @@ class SaleController extends Controller
             return Excel::download(new SalesExport($sales), 'sales_report.xlsx');
         }
 
-        // Return view untuk laporan per customer
-        return view('sales.report', compact('sales', 'fromDate', 'toDate', 'group'));
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('sales.reports.partials.customer_table', compact('sales', 'fromDate', 'toDate', 'group', 'perPage'))->render()
+            ]);
+        }
+
+        return view('sales.reports.report', compact('sales', 'fromDate', 'toDate', 'group', 'perPage'));
     }
 
     public function printPDF($id)
@@ -394,7 +395,7 @@ class SaleController extends Controller
         // Jika memilih per customer
         if ($group == 'customer') {
             $sales = $salesQuery->get(); // Ambil semua sales per customer
-            $view = 'sales.report_customers_pdf';
+            $view = 'sales.reports.report_customers_pdf';
             $data = compact('sales', 'fromDate', 'toDate');
 
         }
@@ -430,7 +431,7 @@ class SaleController extends Controller
             ->filter() // Filter item yang bernilai null (yaitu item dengan quantity 0)
             ->values(); // Reindex array setelah filter
 
-            $view = 'sales.report_items_pdf';
+            $view = 'sales.reports.report_items_pdf';
             $data = compact('items', 'fromDate', 'toDate');
         }
 

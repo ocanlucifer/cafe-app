@@ -10,22 +10,26 @@
     </style>
 </head>
 <body>
-    <h1>Sales Report (Per Item)</h1>
+    <h1>Sales Report (Per Customer)</h1>
     <p><strong>Period:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
     <table>
         <thead>
             <tr>
-                <th>Item</th>
-                <th>Total Quantity</th>
+                <th>No.</th>
+                <th>Customer</th>
                 <th>Total Sales</th>
+                <th>Total Discount</th>
+                <th>Total After Discount</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($items as $item)
+            @foreach($sales as $sale)
             <tr>
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->total_quantity }}</td>
-                <td>Rp {{ number_format($item->total_sales, 2) }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $sale->customer->name }}</td>
+                <td>Rp {{ number_format($sale->sum('total_price'), 2) }}</td>
+                <td>Rp {{ number_format($sale->sum('discount') + $sale->details->sum('dicount'), 2) }}</td>
+                <td>Rp {{ number_format($sale->sum('total_price') - ($sale->sum('discount') + $sale->details->sum('dicount')), 2) }}</td>
             </tr>
             @endforeach
         </tbody>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\IssuingExport;
 use App\Models\Issuing;
 use App\Models\IssuingDetail;
 use App\Models\Item;
@@ -9,6 +10,9 @@ use App\Models\StockCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class IssuingController extends Controller
 {
@@ -264,6 +268,79 @@ class IssuingController extends Controller
             DB::rollBack();
             return back()->with('error', 'Failed to delete issuing transaction: ' . $e->getMessage());
         }
+    }
+
+    //report
+    // Controller method untuk generate report
+    public function generateReport(Request $request)
+    {
+        // Filter berdasarkan tanggal (opsional)
+        $fromDate = Carbon::parse($request->input('from_date', Carbon::now()->startOfDay()));
+        $toDate = Carbon::parse($request->input('to_date', Carbon::now()->endOfDay()));
+
+        // Tentukan waktu yang lebih presisi
+        $fromDate = $fromDate->startOfDay();  // 00:00:00
+        $toDate = $toDate->endOfDay();  // 23:59:59
+
+        $perPage = $request->get('per_page', 10); // Default to 10 per page
+
+        // Query untuk grup berdasarkan item
+        $items = Item::select('items.name')
+            ->join('issuing_detail', 'items.id', '=', 'issuing_detail.item_id')
+            ->join('issuings', 'issuing_detail.issuing_id', '=', 'issuings.id')
+            ->whereBetween('issuings.created_at', [$fromDate, $toDate])
+            ->selectRaw('SUM(issuing_detail.quantity) as total_quantity')
+            ->groupBy('items.name')
+            ->having('total_quantity', '>', 0) // Hanya ambil item dengan total quantity > 0
+            ->paginate($perPage);
+
+
+        // Jika tombol export ditekan
+        if ($request->has('export') && $request->input('export') == 'excel') {
+            // Lakukan ekspor ke Excel
+            return Excel::download(new IssuingExport($items), 'purchase_report.xlsx');
+        }
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('issuings.reports.table', compact('items', 'fromDate', 'toDate', 'perPage'))->render()
+            ]);
+        }
+
+        return view('issuings.reports.report', compact('items', 'fromDate', 'toDate', 'perPage'));
+    }
+
+    public function printReportPDF(Request $request)
+    {
+        // Filter berdasarkan tanggal (opsional)
+        $fromDate = Carbon::parse($request->input('from_date', Carbon::now()->startOfDay()));
+        $toDate = Carbon::parse($request->input('to_date', Carbon::now()->endOfDay()));
+
+        // Tentukan waktu yang lebih presisi
+        $fromDate = $fromDate->startOfDay();  // 00:00:00
+        $toDate = $toDate->endOfDay();  // 23:59:59
+
+        // Ambil filter pilihan grup
+        $group = $request->input('group', 'customer'); // Default 'customer'
+
+        // Query untuk grup berdasarkan item
+        $items = Item::select('items.name')
+            ->join('issuing_detail', 'items.id', '=', 'issuing_detail.item_id')
+            ->join('issuings', 'issuing_detail.issuing_id', '=', 'issuings.id')
+            ->whereBetween('issuings.created_at', [$fromDate, $toDate])
+            ->selectRaw('SUM(issuing_detail.quantity) as total_quantity')
+            ->groupBy('items.name')
+            ->having('total_quantity', '>', 0) // Hanya ambil item dengan total quantity > 0
+            ->get();
+
+        $view = 'issuings.reports.report_items_pdf';
+        $data = compact('items', 'fromDate', 'toDate');
+
+        // Buat PDF dari tampilan yang sesuai
+        $pdf = Pdf::loadView($view, $data);
+
+        // Return PDF untuk diunduh atau ditampilkan
+        return $pdf->stream('Issuings_Report_' . now()->format('Ymd') . '.pdf');
     }
 
 }

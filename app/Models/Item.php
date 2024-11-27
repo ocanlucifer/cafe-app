@@ -22,6 +22,12 @@ class Item extends Model
         return $this->belongsTo(Type::class);
     }
 
+    // Relasi ke SalesDetail
+    public function purchaseDetails()
+    {
+        return $this->hasMany(PurchaseDetail::class); // Menghubungkan dengan SalesDetail
+    }
+
     // public function scopeIsItem($query)
     // {
     //     return $query->where('type_id', 2);

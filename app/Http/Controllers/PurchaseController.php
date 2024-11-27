@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PurchaseExport;
 use App\Models\PurchaseHeader;
 use App\Models\Vendor;
 use App\Models\Item;
 use App\Models\StockCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PurchaseController extends Controller
 {
@@ -242,5 +246,154 @@ class PurchaseController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to delete purchase: ' . $e->getMessage());
         }
+    }
+
+    //report
+    // Controller method untuk generate report
+    public function generateReport(Request $request)
+    {
+        // Filter berdasarkan tanggal (opsional)
+        $fromDate = Carbon::parse($request->input('from_date', Carbon::now()->startOfDay()));
+        $toDate = Carbon::parse($request->input('to_date', Carbon::now()->endOfDay()));
+
+        // Tentukan waktu yang lebih presisi
+        $fromDate = $fromDate->startOfDay();  // 00:00:00
+        $toDate = $toDate->endOfDay();  // 23:59:59
+
+        $perPage = $request->get('per_page', 10); // Default to 10 per page
+
+        // Ambil filter pilihan grup
+        $group = $request->input('group', 'vendor'); // Default 'vendor'
+
+        // Default: laporan per vendor
+        if ($group == 'vendor') {
+            $purchases = PurchaseHeader::select('vendor_id',
+                                                DB::raw('SUM(purchase_headers.total_amount) as total_amount'),
+                                            )
+                ->with(['vendor', 'details.item'])
+                ->whereBetween('purchase_headers.created_at', [$fromDate, $toDate])
+                ->groupBy('purchase_headers.vendor_id')
+                ->paginate($perPage);
+        }
+
+        if ($group == 'item') {
+            // Query untuk grup berdasarkan item
+            $items = Item::select('items.name')
+                ->join('purchase_details', 'items.id', '=', 'purchase_details.item_id')
+                ->join('purchase_headers', 'purchase_details.purchase_header_id', '=', 'purchase_headers.id')
+                ->whereBetween('purchase_headers.created_at', [$fromDate, $toDate])
+                ->selectRaw('SUM(purchase_details.quantity) as total_quantity')
+                ->selectRaw('SUM(purchase_details.total_price) as total_price')
+                ->groupBy('items.name')
+                ->having('total_quantity', '>', 0) // Hanya ambil item dengan total quantity > 0
+                ->paginate($perPage);
+
+            // Jika tombol export ditekan
+            if ($request->has('export') && $request->input('export') == 'excel') {
+                $purchases = PurchaseHeader::with(['vendor', 'details.item'])
+                ->whereBetween('created_at', [$fromDate, $toDate])
+                ->get();
+
+                // Lakukan ekspor ke Excel
+                return Excel::download(new PurchaseExport($purchases), 'purchase_report.xlsx');
+            }
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'html' => view('purchases.reports.partials.item_table', compact('items', 'fromDate', 'toDate', 'group', 'perPage'))->render()
+                ]);
+            }
+
+            return view('purchases.reports.report', compact('items', 'fromDate', 'toDate', 'group', 'perPage'));
+        }
+
+
+        // Jika tombol export ditekan
+        if ($request->has('export') && $request->input('export') == 'excel') {
+            $purchases = PurchaseHeader::with(['vendor', 'details.item'])
+                ->whereBetween('created_at', [$fromDate, $toDate])
+                ->get();
+            // Lakukan ekspor ke Excel
+            return Excel::download(new PurchaseExport($purchases), 'purchase_report.xlsx');
+        }
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('purchases.reports.partials.customer_table', compact('purchases', 'fromDate', 'toDate', 'group', 'perPage'))->render()
+            ]);
+        }
+
+        return view('purchases.reports.report', compact('purchases', 'fromDate', 'toDate', 'group', 'perPage'));
+    }
+
+    public function printReportPDF(Request $request)
+    {
+        // Filter berdasarkan tanggal (opsional)
+        $fromDate = Carbon::parse($request->input('from_date', Carbon::now()->startOfDay()));
+        $toDate = Carbon::parse($request->input('to_date', Carbon::now()->endOfDay()));
+
+        // Tentukan waktu yang lebih presisi
+        $fromDate = $fromDate->startOfDay();  // 00:00:00
+        $toDate = $toDate->endOfDay();  // 23:59:59
+
+        // Ambil filter pilihan grup
+        $group = $request->input('group', 'customer'); // Default 'customer'
+
+        // Ambil data vendor berdasarkan rentang tanggal
+        $PurchaseQuery = PurchaseHeader::select('vendor_id',
+                            DB::raw('SUM(purchase_headers.total_amount) as total_amount'),
+                        )
+                    ->with(['vendor', 'details.item'])
+                    ->whereBetween('purchase_headers.created_at', [$fromDate, $toDate])
+                    ->groupBy('purchase_headers.vendor_id');
+
+        // Jika memilih per customer
+        if ($group == 'vendor') {
+            $vendors = $PurchaseQuery->get(); // Ambil semua vendor per customer
+            $view = 'purchases.reports.report_vendors_pdf';
+            $data = compact('vendors', 'fromDate', 'toDate');
+
+        }
+
+        // Jika memilih per item
+        if ($group == 'item') {
+            // Grouping berdasarkan item
+            $items = Item::with(['purchaseDetails' => function($query) use ($fromDate, $toDate) {
+                $query->whereHas('purchaseHeader', function($q) use ($fromDate, $toDate) {
+                    $q->whereBetween('created_at', [$fromDate, $toDate]);
+                });
+            }])
+            ->get()
+            ->map(function($item) {
+                // Hitung total quantity dan total sales per item
+                $totalQuantity = $item->purchaseDetails->sum('quantity');
+                $total_price = $item->purchaseDetails->sum(function($detail) {
+                    return $detail->total_price;
+                });
+
+                // Hanya kembalikan item yang memiliki total quantity lebih dari 0
+                if ($totalQuantity > 0) {
+                    return (object)[
+                        'name' => $item->name,
+                        'total_quantity' => $totalQuantity,
+                        'total_price' => $total_price
+                    ];
+                }
+
+                // Jika quantity tidak lebih dari 0, kembalikan null
+                return null;
+            })
+            ->filter() // Filter item yang bernilai null (yaitu item dengan quantity 0)
+            ->values(); // Reindex array setelah filter
+
+            $view = 'purchases.reports.report_items_pdf';
+            $data = compact('items', 'fromDate', 'toDate');
+        }
+
+        // Buat PDF dari tampilan yang sesuai
+        $pdf = Pdf::loadView($view, $data);
+
+        // Return PDF untuk diunduh atau ditampilkan
+        return $pdf->stream('Purchases_Report_' . now()->format('Ymd') . '.pdf');
     }
 }
