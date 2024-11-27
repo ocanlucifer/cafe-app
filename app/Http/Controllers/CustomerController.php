@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -45,7 +46,13 @@ class CustomerController extends Controller
             'contact' => 'required|string|max:255',
             'active' => 'required|boolean',
         ]);
-        Customer::create($request->all());
+        Customer::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'contact' => $request->contact,
+            'active'        => $request->active ?? true,
+            'user_id' => Auth::User()->id,
+        ]);
         // return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
         return response()->json(['message' => 'Customer created successfully']);
     }
@@ -63,7 +70,13 @@ class CustomerController extends Controller
             'contact' => 'required|string|max:255',
             'active' => 'required|boolean',
         ]);
-        $customer->update($request->all());
+        $customer->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'contact' => $request->contact,
+            'active'        => $request->active ?? true,
+            'user_id' => Auth::User()->id,
+        ]);
         // return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
         return response()->json(['message' => 'Customer updated successfully']);
     }

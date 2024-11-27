@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('type_id')->constrained('types')->onDelete('cascade'); // Relasi ke tabel types
             $table->boolean('active')->default(true); // Flag aktif
             $table->decimal('price', 10, 2); // Harga menu makanan
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ID pengguna yang melakukan transaksi
             $table->timestamps(); // Timestamps untuk created_at dan updated_at
         });
     }

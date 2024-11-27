@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact');
             $table->boolean('active')->default(true);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ID pengguna yang melakukan transaksi
             $table->timestamps();
         });
     }

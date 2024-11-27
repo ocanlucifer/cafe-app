@@ -24,6 +24,7 @@ class CustomerSeeder extends Seeder
                 'address' => $faker->address,         // Generate a fake address
                 'contact' => $faker->phoneNumber,     // Generate a fake phone number
                 'active' => $faker->boolean,          // Randomly assign active status (true or false)
+                'user_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

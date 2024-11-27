@@ -10,7 +10,7 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category_id', 'type_id', 'price', 'stock','active'];
+    protected $fillable = ['name', 'category_id', 'type_id', 'price', 'stock','active', 'user_id',];
 
     public function category()
     {
@@ -26,6 +26,12 @@ class Item extends Model
     public function purchaseDetails()
     {
         return $this->hasMany(PurchaseDetail::class); // Menghubungkan dengan SalesDetail
+    }
+
+    // Relasi dengan User (transaksi dibuat oleh user)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     // public function scopeIsItem($query)

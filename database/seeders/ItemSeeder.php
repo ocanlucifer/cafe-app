@@ -59,6 +59,7 @@ class ItemSeeder extends Seeder
                     'price' => $faker->randomFloat(2, 5000, 10000),    // Harga acak antara 5000 dan 10000
                     'stock' => 0,                                 // Set stok awal ke 0
                     'active' => true,                             // Pastikan status aktif
+                    'user_id' => 1,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

@@ -15,9 +15,11 @@ class TypeSeeder extends Seeder
     {
         Type::create([
             'name' => 'Vegetarian',
+            'user_id' => 1,
         ]);
         Type::create([
             'name' => 'Non-Vegetarian',
+            'user_id' => 1,
         ]);
 
     }

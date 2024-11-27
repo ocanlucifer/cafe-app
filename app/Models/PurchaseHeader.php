@@ -10,7 +10,11 @@ class PurchaseHeader extends Model
     use HasFactory;
 
     protected $fillable = [
-        'transaction_number', 'vendor_id', 'purchase_date', 'total_amount',
+        'transaction_number',
+        'vendor_id',
+        'purchase_date',
+        'total_amount',
+        'user_id',
     ];
 
     protected static function boot()
@@ -48,6 +52,12 @@ class PurchaseHeader extends Model
     public function vendor()
     {
         return $this->belongsTo(Vendor::class);
+    }
+
+    // Relasi dengan User (transaksi dibuat oleh user)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     protected $casts = [

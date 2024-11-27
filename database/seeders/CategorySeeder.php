@@ -16,21 +16,27 @@ class CategorySeeder extends Seeder
     {
         Category::create([
             'name' => 'Makanan',
+            'user_id' => 1,
         ]);
         Category::create([
             'name' => 'Snack',
+            'user_id' => 1,
         ]);
         Category::create([
             'name' => 'Minuman',
+            'user_id' => 1,
         ]);
         Category::create([
             'name' => 'Paket Makanan',
+            'user_id' => 1,
         ]);
         Category::create([
             'name' => 'Paket Snack',
+            'user_id' => 1,
         ]);
         Category::create([
             'name' => 'Bahan',
+            'user_id' => 1,
         ]);
     }
 }

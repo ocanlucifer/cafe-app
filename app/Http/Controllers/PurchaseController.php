@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -102,6 +103,7 @@ class PurchaseController extends Controller
                 'vendor_id' => $validatedData['vendor_id'],
                 'purchase_date' => $validatedData['purchase_date'],
                 'total_amount' => $validatedData['total_amount'],
+                'user_id' => Auth::User()->id,
             ]);
 
             // Add purchase details
@@ -168,6 +170,7 @@ class PurchaseController extends Controller
                 'vendor_id' => $validated['vendor_id'],
                 'purchase_date' => $validated['purchase_date'],
                 'total_amount' => $validated['total_amount'],
+                'user_id' => Auth::User()->id,
             ]);
 
             //kembalikan stock nya dulu

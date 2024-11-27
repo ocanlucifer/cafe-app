@@ -34,6 +34,7 @@
                     @endif
                 </a>
             </th>
+            <th>Registered By</th>
             <th class="col-2 text-center">Actions</th>
         </tr>
     </thead>
@@ -49,6 +50,7 @@
                         {{ $customer->active ? 'Active' : 'Inactive' }}
                     </span>
                 </td>
+                <td>{{ $customer->user->name }}</td>
                 <td class="text-center">
                     <button class="btn btn-sm btn-warning edit-customer"
                         data-id="{{ $customer->id }}"

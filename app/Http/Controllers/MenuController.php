@@ -8,6 +8,7 @@ use App\Models\MenuItem;
 use App\Models\Category;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
@@ -90,6 +91,7 @@ class MenuController extends Controller
             'type_id'       => $request->type_id,
             'price'         => $request->price,
             'active'        => $request->active ?? true,
+            'user_id' => Auth::User()->id,
         ]);
         // return redirect()->route('menus.index')->with('success', 'Item created successfully.');
         return response()->json(['success' => 'Menu Created successfully.']);
@@ -116,6 +118,7 @@ class MenuController extends Controller
             'type_id'       => $request->type_id,
             'price'         => $request->price,
             'active'        => $request->active ?? true,
+            'user_id' => Auth::User()->id,
         ]);
         // return redirect()->route('menus.index')->with('success', 'Item updated successfully.');
         return response()->json(['success' => 'Menu updated successfully.']);

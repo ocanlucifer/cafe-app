@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -56,7 +57,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        Category::create($request->all());
+        Category::create([
+            'name' => $request->name,
+            'user_id' => Auth::User()->id,
+        ]);
         // return redirect()->route('categories.index')->with('success', 'Category created successfully.');
 
         return response()->json(['message' => 'Category created successfully!'], 201);
@@ -70,7 +74,10 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        $category->update($request->all());
+        $category->update([
+            'name' => $request->name,
+            'user_id' => Auth::User()->id,
+        ]);
         return response()->json(['message' => 'Category updated successfully!'], 200);
         // return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }

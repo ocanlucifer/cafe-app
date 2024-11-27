@@ -51,6 +51,7 @@
                         @endif
                     </a>
                 </th>
+                <th>registered By</th>
                 <th class="col-2 text-center">Actions</th>
             </tr>
         </thead>
@@ -68,6 +69,7 @@
                             {{ $item->active ? 'Active' : 'Inactive' }}
                         </span>
                     </td>
+                    <td>{{ $item->user->name }}</td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-warning edit-item" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-category_id="{{ $item->category_id }}" data-type_id="{{ $item->type_id }}" data-price="{{ $item->price }}" data-stock="{{ $item->stock }}" data-active="{{ $item->active }}" data-bs-toggle="tooltip" title="Edit Item">
                             <i class="bi bi-pencil-square"></i>

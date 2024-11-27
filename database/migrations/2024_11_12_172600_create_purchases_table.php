@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('vendor_id')->constrained()->onDelete('cascade'); // Vendor terkait
             $table->date('purchase_date'); // Tanggal transaksi
             $table->decimal('total_amount', 10, 2)->default(0); // Total nilai transaksi
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ID pengguna yang melakukan transaksi
             $table->timestamps();
         });
 

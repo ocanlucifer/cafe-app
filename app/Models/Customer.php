@@ -10,10 +10,16 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'contact'];
+    protected $fillable = ['name', 'address', 'contact', 'active', 'user_id',];
 
     public function sales()
     {
         return $this->hasMany(Sale::class);
+    }
+
+    // Relasi dengan User (transaksi dibuat oleh user)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

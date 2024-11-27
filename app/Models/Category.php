@@ -10,16 +10,25 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'user_id',
+    ];
 
     public function items()
     {
         return $this->hasMany(Item::class);
     }
 
-    public function scopeIsNotItem($query)
+    // Relasi dengan User (transaksi dibuat oleh user)
+    public function user()
     {
-        return $query->where('id','<>', 6);
+        return $this->belongsTo(User::class);
     }
+
+    // public function scopeIsNotItem($query)
+    // {
+    //     return $query->where('id','<>', 6);
+    // }
 }
 

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TypeController extends Controller
 {
@@ -51,7 +52,10 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        Type::create($request->all());
+        Type::create([
+            'name' => $request->name,
+            'user_id' => Auth::User()->id,
+        ]);
         // return redirect()->route('types.index')->with('success', 'Type created successfully.');
         return response()->json(['message' => 'Category created successfully!'], 201);
     }
@@ -64,7 +68,10 @@ class TypeController extends Controller
     public function update(Request $request, Type $type)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        $type->update($request->all());
+        $type->update([
+            'name' => $request->name,
+            'user_id' => Auth::User()->id,
+        ]);
         // return redirect()->route('types.index')->with('success', 'Type updated successfully.');
         return response()->json(['message' => 'Category updated successfully!'], 200);
     }
