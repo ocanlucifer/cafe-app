@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Category;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -87,6 +88,7 @@ class ItemController extends Controller
             'price'         => $request->price,
             'stock'         => 0,
             'active'        => $request->active ?? true,
+            'user_id' => Auth::User()->id,
         ]);
 
         // return redirect()->route('items.index')->with('success', 'Item created successfully.');
@@ -115,6 +117,7 @@ class ItemController extends Controller
             'type_id'       => $request->type_id,
             'price'         => $request->price,
             'active'        => $request->active ?? true,
+            'user_id' => Auth::User()->id,
         ]);
         // $request->validate([
         //     'name' => 'required|string|max:255',

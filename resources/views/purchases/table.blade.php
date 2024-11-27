@@ -28,6 +28,7 @@
                         @endif
                     </a>
                 </th>
+                <th>Entry By</th>
                 <th class="col-2 text-center">Actions</th>
             </tr>
         </thead>
@@ -39,6 +40,7 @@
                     <td>{{ $purchase->vendor->name }}</td>
                     <td>Rp {{ number_format($purchase->details->sum('total_price'), 2) }}</td>
                     <td>{{ $purchase->created_at->format('d-m-Y') }}</td>
+                    <td>{{ $purchase->user->name }}</td>
                     <td class="text-center">
                         {{-- Edit Button --}}
                         <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Purchase">

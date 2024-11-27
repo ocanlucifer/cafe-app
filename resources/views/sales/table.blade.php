@@ -30,6 +30,7 @@
                         @endif
                     </a>
                 </th>
+                <th>Entry By</th>
                 <th class="col-2 text-center">Actions</th>
             </tr>
         </thead>
@@ -43,6 +44,7 @@
                     <td>Rp {{ number_format($sale->total_item_discount + $sale->discount, 2) }}</td>
                     <td>Rp {{ number_format($sale->total_after_discount, 2) }}</td>
                     <td>{{ $sale->created_at->format('d-m-Y') }}</td>
+                    <td>{{ $sale->user->name }}</td>
                     <td class="text-center">
                         {{-- Edit Button --}}
                         <a href="{{ route('sales.edit', $sale->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Transaction">

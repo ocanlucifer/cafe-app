@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained()->onDelete('cascade'); // Referensi ke pelanggan
             $table->decimal('total_price', 15, 2); // Total transaksi
             $table->decimal('discount', 10, 2)->default(0);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ID pengguna yang melakukan transaksi
             $table->timestamps(); // Timestamps untuk created_at dan updated_at
         });
 

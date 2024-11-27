@@ -23,7 +23,7 @@
         <tbody>
             @foreach($vendors as $vendor)
             <tr>
-                <td class="text-center">{{ $loop->iteration }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $vendor->vendor->name }}</td>
                 <td>Rp {{ number_format($vendor->total_amount, 2) }}</td>
             </tr>

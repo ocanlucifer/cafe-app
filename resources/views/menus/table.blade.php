@@ -43,6 +43,7 @@
                         @endif
                     </a>
                 </th>
+                <th>Registered By</th>
                 <th class="col-2 text-center">Actions</th>
             </tr>
         </thead>
@@ -59,6 +60,7 @@
                             {{ $menu->active ? 'Active' : 'Inactive' }}
                         </span>
                     </td>
+                    <td>{{ $menu->user->name }}</td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-warning edit-menu" data-id="{{ $menu->id }}" data-name="{{ $menu->name }}" data-category_id="{{ $menu->category_id }}" data-type_id="{{ $menu->type_id }}"  data-price="{{ $menu->price }}" data-active="{{ $menu->active }}" data-bs-toggle="tooltip" title="Edit Menu">
                             <i class="bi bi-pencil-square"></i>

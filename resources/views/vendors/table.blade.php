@@ -35,6 +35,7 @@
                         @endif
                     </a>
                 </th>
+                <th>Registered By</th>
                 <th class="col-2 text-center">Actions</th>
             </tr>
         </thead>
@@ -50,6 +51,7 @@
                         {{ $vendor->active ? 'Active' : 'Inactive' }}
                     </span>
                 </td>
+                <td>{{ $vendor->user->name }}</td>
                 <td class="text-center">
                     <button class="btn btn-sm btn-warning edit-vendor" data-id="{{ $vendor->id }}" data-name="{{ $vendor->name }}" data-contact="{{ $vendor->contact }}" data-address="{{ $vendor->address }}" data-active="{{ $vendor->active }}" data-bs-toggle="tooltip" title="Edit Vendor">
                         <i class="bi bi-pencil-square"></i>

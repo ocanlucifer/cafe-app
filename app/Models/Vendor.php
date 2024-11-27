@@ -10,7 +10,7 @@ class Vendor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'contact', 'active'];
+    protected $fillable = ['name', 'address', 'contact', 'active','user_id',];
 
     // Optionally, you can define a default scope to query only active vendors by default
     public function scopeActive($query)
@@ -20,6 +20,12 @@ class Vendor extends Model
 
     public function purchases()
     {
-        return $this->hasMany(Purchase::class);
+        return $this->hasMany(PurchaseHeader::class);
+    }
+
+    // Relasi dengan User (transaksi dibuat oleh user)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

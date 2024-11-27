@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorController extends Controller
 {
@@ -46,6 +47,7 @@ class VendorController extends Controller
             'contact' => 'required|string|max:255',
             'active' => 'required|boolean',
         ]);
+        $request->merge(['user_id' => Auth::User()->id]);
         Vendor::create($request->all());
         // return redirect()->route('vendors.index')->with('success', 'Vendor created successfully.');
         return response()->json(['success' => 'Vendor created successfully.']);
@@ -64,6 +66,7 @@ class VendorController extends Controller
             'contact' => 'required|string|max:255',
             'active' => 'required|boolean',
         ]);
+        $request->merge(['user_id' => Auth::User()->id]);
         $vendor->update($request->all());
         // return redirect()->route('vendors.index')->with('success', 'Vendor updated successfully.');
         return response()->json(['success' => 'Vendor updated successfully.']);

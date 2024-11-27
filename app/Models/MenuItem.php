@@ -20,6 +20,7 @@ class MenuItem extends Model
         'type_id',
         'active',
         'price',
+        'user_id',
     ];
 
     /**
@@ -39,5 +40,11 @@ class MenuItem extends Model
     public function salesDetails()
     {
         return $this->hasMany(SalesDetail::class); // Menghubungkan dengan SalesDetail
+    }
+
+    // Relasi dengan User (transaksi dibuat oleh user)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -78,6 +78,7 @@ class MenuItemSeeder extends Seeder
                     'type_id' => $faker->randomElement(array_keys($types)), // Random type ID
                     'active' => $faker->boolean, // True/False
                     'price' => $faker->randomFloat(15000, 20000, 30000), // Harga acak antara 10.00 - 200.00
+                    'user_id' => 1,
                 ]);
             }
         }

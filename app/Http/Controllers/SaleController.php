@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\SalesExport;
+use Illuminate\Support\Facades\Auth;
 
 class SaleController extends Controller
 {
@@ -150,6 +151,7 @@ class SaleController extends Controller
                     'customer_id' => $validatedData['customer_id'],
                     'total_price' => $totalPrice - ($validatedData['discount'] ?? 0), // Total setelah diskon header
                     'discount' => $validatedData['discount'] ?? 0, // Diskon header
+                    'user_id' => Auth::User()->id,
                     // 'transaction_number' => Sale::generateTransactionNumber(), // Nomor transaksi unik
                 ]);
 
@@ -211,6 +213,7 @@ class SaleController extends Controller
         // Update data transaksi
         $sale->customer_id = $request->customer_id;
         $sale->discount = $request->discount ?? 0;
+        $sale->user_id = Auth::User()->id;
         $sale->save();
 
         // Hapus detail lama jika ada

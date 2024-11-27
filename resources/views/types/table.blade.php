@@ -11,6 +11,7 @@
                         @endif
                     </a>
                 </th>
+                <th>Registered By</th>
                 <th class="col-4 text-center">Actions</th>
             </tr>
         </thead>
@@ -19,6 +20,7 @@
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{ $type->name }}</td>
+                    <td>{{ $type->user->name }}</td>
                     <td class="text-center">
                         <!-- Edit Button with Tooltip -->
                         <button class="btn btn-warning btn-sm edit-type" data-id="{{ $type->id }}" data-name="{{ $type->name }}" data-bs-toggle="tooltip" title="Edit">
