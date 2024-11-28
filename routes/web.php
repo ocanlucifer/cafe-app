@@ -43,9 +43,6 @@ Route::middleware('auth')->group(function () {
 
 //route for admin & owner
 Route::middleware(['auth', RoleMiddleware::class . ':admin,owner'])->group(function () {
-    // Issuing Routes
-    Route::resource('issuings', IssuingController::class);
-
     // Route untuk menampilkan laporan pembelian
     Route::get('/pembelian/reports', [PurchaseController::class, 'generateReport'])->name('pembelian.reports');
     Route::get('/pembelian/printReportPDF', [PurchaseController::class, 'printReportPDF'])->name('pembelian.printReportPDF');
@@ -78,6 +75,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin,owner,cashier'])->gro
 Route::middleware(['auth', RoleMiddleware::class . ':admin,owner,pelayan'])->group(function () {
     // Purchase Routes
     Route::resource('purchases', PurchaseController::class);
+    // Issuing Routes
+    Route::resource('issuings', IssuingController::class);
 });
 
 //route for admin
