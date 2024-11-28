@@ -138,20 +138,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <!-- Master Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="masterDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-cogs"></i> Master
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="masterDropdown">
-                        <li><a class="dropdown-item" href="{{ route('categories.index') }}"><i class="fas fa-th"></i> Categories</a></li>
-                        <li><a class="dropdown-item" href="{{ route('types.index') }}"><i class="fas fa-cogs"></i> Types</a></li>
-                        <li><a class="dropdown-item" href="{{ route('items.index') }}"><i class="fas fa-cube"></i> Items</a></li>
-                        <li><a class="dropdown-item" href="{{ route('menus.index') }}"><i class="fas fa-utensils"></i> Menus</a></li>
-                        <li><a class="dropdown-item" href="{{ route('vendors.index') }}"><i class="fas fa-truck"></i> Vendors</a></li>
-                        <li><a class="dropdown-item" href="{{ route('customers.index') }}"><i class="fas fa-users"></i> Customers</a></li>
-                        <li><a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog"></i> User Management</a></li>
-                    </ul>
-                </li>
+                @if (auth()->user()->role === 'admin')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="masterDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cogs"></i> Master
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="masterDropdown">
+                            <li><a class="dropdown-item" href="{{ route('categories.index') }}"><i class="fas fa-th"></i> Categories</a></li>
+                            <li><a class="dropdown-item" href="{{ route('types.index') }}"><i class="fas fa-cogs"></i> Types</a></li>
+                            <li><a class="dropdown-item" href="{{ route('items.index') }}"><i class="fas fa-cube"></i> Items</a></li>
+                            <li><a class="dropdown-item" href="{{ route('menus.index') }}"><i class="fas fa-utensils"></i> Menus</a></li>
+                            <li><a class="dropdown-item" href="{{ route('vendors.index') }}"><i class="fas fa-truck"></i> Vendors</a></li>
+                            <li><a class="dropdown-item" href="{{ route('customers.index') }}"><i class="fas fa-users"></i> Customers</a></li>
+                            <li><a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog"></i> User Management</a></li>
+                        </ul>
+                    </li>
+                @endif
 
                 <!-- Transaksi Dropdown -->
                 <li class="nav-item dropdown">

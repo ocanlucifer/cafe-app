@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Dashboard</h1>
+<div class="container">
+    <div class="row justify-content-between">
+        <div class="col-md-8">
+            <h3 class="display-6">Unauthorized Access</h3>
+        </div>
+    </div>
+
     {{-- Error Messages --}}
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -17,11 +23,7 @@
             {!! session('error') !!}
         </div>
     @endif
-    <div class="container mt-5">
-        <h3>Selamat Datang, {{ Auth::user()->name }}</h3>
-        {{-- <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-danger">Logout</button>
-        </form> --}}
-    </div>
+    <a href="{{ url('/') }}">Back to Home</a>
+</div>
+
 @endsection
