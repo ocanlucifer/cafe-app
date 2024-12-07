@@ -26,37 +26,37 @@ class StockMutationController extends Controller
 
         $perPage = $request->get('per_page', 10); // Default to 10 per page
 
-        // Query menggunakan Eloquent
-        $stockMutations = StockCard::select([
-            'stock_cards.item_id',
+        $stockMutations = Item::select([
+            'items.id AS item_id',
             'items.name',
             DB::raw('(SELECT qty_begin
-                    FROM stock_cards AS X
-                    WHERE X.item_id = stock_cards.item_id
+                      FROM stock_cards AS X
+                      WHERE X.item_id = items.id
                         AND X.created_at = (
                             SELECT MIN(created_at)
                             FROM stock_cards AS Y
-                            WHERE Y.item_id = stock_cards.item_id
+                            WHERE Y.item_id = items.id
                               AND Y.created_at BETWEEN "' . $fromDate . '" AND "' . $toDate . '"
                         )
-                    ) AS qty_begin'),
-            DB::raw('SUM(stock_cards.qty_in) AS qty_in'),
-            DB::raw('SUM(stock_cards.qty_out) AS qty_out'),
+                     ) AS qty_begin'),
+            DB::raw('COALESCE(SUM(stock_cards.qty_in), 0) AS qty_in'),
+            DB::raw('COALESCE(SUM(stock_cards.qty_out), 0) AS qty_out'),
             DB::raw('(SELECT qty_end
-                    FROM stock_cards AS Z
-                    WHERE Z.item_id = stock_cards.item_id
+                      FROM stock_cards AS Z
+                      WHERE Z.item_id = items.id
                         AND Z.created_at = (
                             SELECT MAX(created_at)
                             FROM stock_cards AS O
-                            WHERE O.item_id = stock_cards.item_id
+                            WHERE O.item_id = items.id
                               AND O.created_at BETWEEN "' . $fromDate . '" AND "' . $toDate . '"
                         )
-                    ) AS qty_end')
+                     ) AS qty_end'),
         ])
-        ->leftjoin('items', 'stock_cards.item_id', '=', 'items.id')
-        ->whereBetween('stock_cards.created_at', [$fromDate, $toDate]) // Filter by date
-        ->groupBy('stock_cards.item_id', 'items.name')
-        ->paginate($perPage); // Menambahkan pagination
+        ->leftJoin('stock_cards', 'items.id', '=', 'stock_cards.item_id') // Join stock_cards
+        ->whereBetween('stock_cards.created_at', [$fromDate, $toDate]) // Filter berdasarkan tanggal
+        ->groupBy('items.id', 'items.name') // Group berdasarkan item ID dan nama
+        ->paginate($perPage); // Pagination
+
 
         // Jika tombol export ditekan
         if ($request->has('export') && $request->input('export') == 'excel') {

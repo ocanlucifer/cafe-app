@@ -12,10 +12,10 @@
         @foreach ($sales as $sale)
         <tr>
             <td class="text-center">{{ $loop->iteration }}</td>
-            <td>{{ $sale->customer->name }}</td>
-            <td>Rp {{ number_format($sale->total_sales, 2) }}</td>
-            <td>Rp {{ number_format($sale->total_discount + $sale->details->sum('discount'), 2) }}</td>
-            <td>Rp {{ number_format($sale->total_sales - ($sale->total_discount + $sale->details->sum('discount')), 2) }}</td>
+            <td>{{ $sale->name }}</td>
+            <td>Rp {{ number_format($sale->total_before_discount, 2) }}</td>
+            <td>Rp {{ number_format($sale->total_discount, 2) }}</td>
+            <td>Rp {{ number_format($sale->total_after_discount, 2) }}</td>
         </tr>
         @endforeach
     </tbody>

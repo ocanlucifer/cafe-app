@@ -15,7 +15,11 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StockMutationController;
+
+
+use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\RoleMiddleware;
+use App\Helpers\RouteHelper;
 
 
 
@@ -30,7 +34,9 @@ Route::middleware('auth')->group(function () {
 
     //Dashboard Route
     Route::get('/', function () {
-        return view('dashboard');
+        $user = Auth::user();
+        $accessibleRoutes = RouteHelper::getAccessibleRoutes($user->role);
+        return view('dashboard', compact('accessibleRoutes'));
     })->name('dashboard');
 
     Route::get('/unauthorized', function () {
