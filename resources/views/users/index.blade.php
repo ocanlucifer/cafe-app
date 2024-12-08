@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">User Management</h1>
+        <h1 class="mb-0">Kelola Pengguna</h1>
         <button class="btn btn-primary btn-sm" id="open-create-form">
-            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Add User
+            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Tambah Pengguna
         </button>
     </div>
 
     <!-- Success Message -->
     <div id="success-message" class="alert alert-success d-none" role="alert">
-        User saved successfully!
+        Data Pengguna berhasil di simpan!
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name, email, role, or username" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari nama, email, role, atau username" id="search" value="{{ $search }}">
             </div>
             {{-- <div class="col-md-2 col-sm-6"> --}}
                 <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
@@ -55,7 +55,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="userModalLabel">User Form</h5>
+                    <h5 class="modal-title" id="userModalLabel">Form Pengguna</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -63,7 +63,7 @@
                         @csrf
                         <input type="hidden" name="id" id="user-id">
                         <div class="mb-3">
-                            <label for="user-name" class="form-label">Name</label>
+                            <label for="user-name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="user-name" name="name" required>
                         </div>
                         <div class="mb-3">
@@ -87,8 +87,8 @@
                         <div class="mb-3">
                             <label for="user-status" class="form-label">Status</label>
                             <select id="user-status" name="is_active" class="form-select" required>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Nonaktif</option>
                             </select>
                         </div>
                     </form>
@@ -162,7 +162,7 @@
 
         // Open the Create user form
         $('#open-create-form').on('click', function() {
-            $('#userModalLabel').text('Create User');
+            $('#userModalLabel').text('Buat Pengguna');
             $('#user-form')[0].reset(); // Clear form
             $('#user-id').val(''); // Clear hidden id field
             $('#userModal').modal('show');
@@ -177,7 +177,7 @@
             const userRole = $(this).data('role');
             const userStatus = $(this).data('status');
 
-            $('#userModalLabel').text('Edit User');
+            $('#userModalLabel').text('Ubah Pengguna');
             $('#user-id').val(userId);
             $('#user-name').val(name);
             $('#user-username').val(userName);
@@ -202,7 +202,7 @@
                 data: formData,
                 success: function(response) {
                     // Show success message
-                    $('#success-message').removeClass('d-none').text('User saved successfully!');
+                    $('#success-message').removeClass('d-none').text('Data Pengguna Berhasil Di Simpan!');
 
                     // Hide success message after 3 seconds
                     setTimeout(function() {
@@ -213,7 +213,7 @@
                     fetchUsers();  // Reload the table after saving
                 },
                 error: function(xhr) {
-                    alert('An error occurred while saving the user.');
+                    alert('Terjadi kesalahan ketika menyimpan data pengguna.');
                 }
             });
         });
@@ -224,7 +224,7 @@
             const userName = $(this).data('name');
 
             // Confirm before deletion
-            if (confirm(`Are you sure you want to delete the user "${userName}"?`)) {
+            if (confirm(`anda yakin ingin menghapus user "${userName}"?`)) {
                 $.ajax({
                     url: `/users/${userId}`,
                     method: 'DELETE',
@@ -233,7 +233,7 @@
                     },
                     success: function(response) {
                         // Show success message
-                        $('#success-message').removeClass('d-none').text('User deleted successfully!');
+                        $('#success-message').removeClass('d-none').text('Data Pengguna berhasil di hapus!');
 
                         // Hide success message after 3 seconds
                         setTimeout(function() {
@@ -243,7 +243,7 @@
                         fetchUsers(); // Reload the table after deletion
                     },
                     error: function(xhr) {
-                        alert('An error occurred while deleting the user.');
+                        alert('Terjadi kesalahan ketika menghapus data pengguna.');
                     }
                 });
             }
@@ -256,7 +256,7 @@
             const userStatus = $(this).data('status');
 
             // Confirm before deletion
-            if (confirm(`Are you sure you want to "${userStatus}" the user "${userName}"?`)) {
+            if (confirm(`anda yakin ingin mengubah status "${userStatus}" dari pengguna "${userName}"?`)) {
                 $.ajax({
                     url: `/users/${userId}/toggleStatus`,
                     method: 'POST',
@@ -265,7 +265,7 @@
                     },
                     success: function(response) {
                         // Show success message
-                        $('#success-message').removeClass('d-none').text(`User "${userStatus}" successfully!`);
+                        $('#success-message').removeClass('d-none').text(`Pengguna "${userStatus}" Berhasil!`);
 
                         // Hide success message after 3 seconds
                         setTimeout(function() {
@@ -275,7 +275,7 @@
                         fetchUsers(); // Reload the table after deletion
                     },
                     error: function(xhr) {
-                        alert('An error occurred while deleting the user.');
+                        alert('Terjadi kesalahan ketika mengubah status pengguna.');
                     }
                 });
             }
@@ -310,7 +310,7 @@
             const userId = $(this).data('id');
             const userName = $(this).data('name');
 
-            if (confirm(`Are you sure you want to reset the password for ${userName}?`)) {
+            if (confirm(`Anda yakin ingin me-reset passwor untuk user ${userName}?`)) {
                 $.ajax({
                     url: `/users/${userId}/reset-password`,
                     method: 'POST',
@@ -318,10 +318,10 @@
                         _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
                     },
                     success: function (response) {
-                        alert(`${response.message}\nNew Password: ${response.new_password}`);
+                        alert(`${response.message}\nPassword Baru: ${response.new_password}`);
                     },
                     error: function (xhr) {
-                        alert('An error occurred while resetting the password.');
+                        alert('Terjadi kesalahan ketika me-reset password pengguna.');
                     }
                 });
             }

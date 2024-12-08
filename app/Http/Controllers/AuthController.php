@@ -36,7 +36,7 @@ class AuthController extends Controller
             // Periksa apakah akun aktif
             if (!$user->is_active) {
                 Auth::logout();
-                return redirect()->back()->withErrors(['login' => 'User Suspended']);
+                return redirect()->back()->withErrors(['login' => 'Pengguna Tidak Aktif']);
             }
 
             // // Periksa apakah user memiliki role yang tepat (misal: admin)

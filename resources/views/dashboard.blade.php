@@ -19,11 +19,11 @@
     @endif
     <div class="container mt-5">
         <h3>Selamat Datang, {{ Auth::user()->name }}</h3>
-        <h4>Menu yang Dapat Diakses:</h4>
-        <ul>
+        {{-- <h4>Menu yang Dapat Diakses:</h4> --}}
+        {{-- <ul>
             @foreach ($accessibleRoutes as $route)
                 <li><a href="{{ url($route) }}">{{ $route }}</a></li>
             @endforeach
-        </ul>
+        </ul> --}}
     </div>
 @endsection

@@ -99,7 +99,7 @@ class IssuingController extends Controller
                 // Check if the requested quantity is greater than the available stock
                 if ($item['quantity'] > $itemModel->stock) {
                     // Simpan error dalam array untuk setiap item
-                    $errors[] = "Insufficient stock for item: {$itemModel->name}. Available stock: {$itemModel->stock}, Requested: {$item['quantity']}.";
+                    $errors[] = "Stok untuk barang: {$itemModel->name} Tidak Cukup. Stok yang tersedia: {$itemModel->stock}, Sedangkan yang anda minta: {$item['quantity']}.";
                 } else {
                     $issuing->issuingDetails()->create([
                         'item_id' => $item['item_id'],
@@ -129,10 +129,10 @@ class IssuingController extends Controller
 
             DB::commit();
 
-            return redirect()->route('issuings.index')->with('success', 'Issuing transaction created successfully.');
+            return redirect()->route('issuings.index')->with('success', 'Transaksi Pengeluaran Baranga Berhasil Di Buat.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to create issuing transaction: ' . $e->getMessage());
+            return back()->with('error', 'Gagal Membuat Transaksi Pengeluaran Barang: ' . $e->getMessage());
         }
     }
 
@@ -175,7 +175,7 @@ class IssuingController extends Controller
                 // Check if the requested quantity is greater than the available stock
                 if ($item['quantity'] > $itm->stock) {
                     // Simpan error dalam array untuk setiap item
-                    $errors[] = "Insufficient stock for item: {$itm->name}. Available stock: {$itm->stock}, Requested: {$item['quantity']}.";
+                    $errors[] = "Stok untuk barang: {$itm->name} tidak cukup. stok yang tersedia: {$itm->stock}, sedangkan yang anda minta: {$item['quantity']}.";
                 }
             }
 
@@ -223,10 +223,10 @@ class IssuingController extends Controller
 
             DB::commit();
 
-            return redirect()->route('issuings.index')->with('success', 'Issuing transaction updated successfully.');
+            return redirect()->route('issuings.index')->with('success', 'Transaksi Pengeluaran Barang Berhasil Di Ubah.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to update issuing transaction: ' . $e->getMessage());
+            return back()->with('error', 'gagal Menyimpan Perubahan Transaksi: ' . $e->getMessage());
         }
     }
 
@@ -263,10 +263,10 @@ class IssuingController extends Controller
 
             DB::commit();
 
-            return redirect()->route('issuings.index')->with('success', 'Issuing transaction deleted successfully.');
+            return redirect()->route('issuings.index')->with('success', 'Transaksi Pengeluaran Barang Berhasil Di Hapus.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to delete issuing transaction: ' . $e->getMessage());
+            return back()->with('error', 'Gagal Menghapus Transaksi: ' . $e->getMessage());
         }
     }
 

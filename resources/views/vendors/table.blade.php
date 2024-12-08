@@ -5,7 +5,7 @@
                 <th class="col-0">No.</th>
                 <th class="col-3">
                     <a href="#" class="sortable nav-link" data-sort-by="name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Name
+                        Nama
                         @if ($sortBy === 'name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -13,7 +13,7 @@
                 </th>
                 <th class="col-2">
                     <a href="#" class="sortable nav-link" data-sort-by="contact" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Contact
+                        Kontak
                         @if ($sortBy === 'contact')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -21,7 +21,7 @@
                 </th>
                 <th class="col-4">
                     <a href="#" class="sortable nav-link" data-sort-by="address" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Address
+                        Alamat
                         @if ($sortBy === 'address')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -35,8 +35,8 @@
                         @endif
                     </a>
                 </th>
-                <th>Registered By</th>
-                <th class="col-2 text-center">Actions</th>
+                <th>Di Daftarkan Oleh</th>
+                <th class="col-2 text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -48,25 +48,25 @@
                 <td>{{ $vendor->address }}</td>
                 <td class="text-center">
                     <span class="badge {{ $vendor->active ? 'bg-success' : 'bg-danger' }}">
-                        {{ $vendor->active ? 'Active' : 'Inactive' }}
+                        {{ $vendor->active ? 'Aktif' : 'Nonaktif' }}
                     </span>
                 </td>
                 <td>{{ $vendor->user->name }}</td>
                 <td class="text-center">
-                    <button class="btn btn-sm btn-warning edit-vendor" data-id="{{ $vendor->id }}" data-name="{{ $vendor->name }}" data-contact="{{ $vendor->contact }}" data-address="{{ $vendor->address }}" data-active="{{ $vendor->active }}" data-bs-toggle="tooltip" title="Edit Vendor">
+                    <button class="btn btn-sm btn-warning edit-vendor" data-id="{{ $vendor->id }}" data-name="{{ $vendor->name }}" data-contact="{{ $vendor->contact }}" data-address="{{ $vendor->address }}" data-active="{{ $vendor->active }}" data-bs-toggle="tooltip" title="Ubah">
                         <i class="bi bi-pencil-square"></i>
                     </button>
-                    <button class="btn btn-sm btn-danger delete-vendor" data-id="{{ $vendor->id }}"  data-bs-toggle="tooltip" title="Delete Vendor">
+                    <button class="btn btn-sm btn-danger delete-vendor" data-id="{{ $vendor->id }}"  data-bs-toggle="tooltip" title="Hapus">
                         <i class="bi bi-trash"></i>
                     </button>
-                    <button class="btn btn-sm {{ $vendor->active ? 'btn-secondary' : 'btn-success' }} toggle-status" data-id="{{ $vendor->id }}" data-bs-toggle="tooltip" title="{{ $vendor->active ? 'Deactivate Vendor' : 'Activate Vendor' }}">
+                    <button class="btn btn-sm {{ $vendor->active ? 'btn-secondary' : 'btn-success' }} toggle-status" data-id="{{ $vendor->id }}" data-bs-toggle="tooltip" title="{{ $vendor->active ? 'Nonaktifkan' : 'Aktifkan' }}">
                         <i class="bi bi-toggle-{{ $vendor->active ? 'on' : 'off' }}"></i>
                     </button>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="5" class="text-center">No vendors found.</td>
+                <td colspan="5" class="text-center">Tidak ada Data supplier.</td>
             </tr>
             @endforelse
         </tbody>
@@ -76,7 +76,7 @@
 <div class="d-flex justify-content-between align-items-center mt-3">
     <!-- Showing results text on the left -->
     <span class="text-muted">
-        Showing {{ $vendors->firstItem() }} to {{ $vendors->lastItem() }} of {{ $vendors->total() }} vendors
+        Menampilkan {{ $vendors->firstItem() }} sampai {{ $vendors->lastItem() }} dari {{ $vendors->total() }} Supplier
     </span>
 
     <!-- Pagination links on the right -->

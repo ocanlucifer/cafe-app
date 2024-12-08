@@ -4,13 +4,13 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-md-8">
-            <h3 class="display-6">Create New Transaction</h3>
+            <h3 class="display-6">Buat Transaksi Penjualan</h3>
         </div>
         <div class="col-md-4 text-end">
             <a href="{{ route('sales.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-chevron-left"></i>
                 <i class="fas fa-chevron-left"></i>
-                Back to Transaction List
+                Kembali ke daftar Transaksi
             </a>
         </div>
     </div>
@@ -33,9 +33,9 @@
         <div class="row mb-3">
             {{-- Select Customer --}}
             <div class="col-md-6">
-                <label for="customer_id" class="form-label">Customer</label>
+                <label for="customer_id" class="form-label">Pelanggan</label>
                 <select name="customer_id" id="customer_id" class="form-control" required>
-                    <option value="">Select Customer</option>
+                    <option value="">Pilih Pelanggan</option>
                     @foreach($customers as $customer)
                         <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                     @endforeach
@@ -44,29 +44,29 @@
 
             {{-- Header Discount --}}
             <div class="col-md-6">
-                <label for="discount" class="form-label">Transaction Discount (Header)</label>
+                <label for="discount" class="form-label">Diskon Transaksi (Header)</label>
                 <input type="number" name="discount" id="discount" class="form-control" placeholder="Discount for the entire transaction" min="0" step="0.01" value="0">
             </div>
         </div>
 
         {{-- Transaction Summary --}}
         <div id="transaction-summary" class="mb-4 p-3 border rounded bg-light">
-            <h3>Transaction Summary</h3>
+            <h3>Rekap Transaksi</h3>
             <div class="row">
                 <div class="col-md-3">
-                    <p><strong>Total Before Discount:</strong></p>
+                    <p><strong>Total Sebelum Diskon:</strong></p>
                     <h5 class="text-primary">Rp <span id="total-before-discount">0.00</span></h5>
                 </div>
                 <div class="col-md-3">
-                    <p><strong>Total Item Discount:</strong></p>
+                    <p><strong>Total Diskon Per Menu:</strong></p>
                     <h5 class="text-danger">Rp <span id="total-discount-item">0.00</span></h5>
                 </div>
                 <div class="col-md-3">
-                    <p><strong>Transaction Discount (Header):</strong></p>
+                    <p><strong>Diskon Transaksi (header):</strong></p>
                     <h5 class="text-danger">Rp <span id="total-header-discount">0.00</span></h5>
                 </div>
                 <div class="col-md-3">
-                    <p><strong>Grand Total:</strong></p>
+                    <p><strong>Total Nilai Transaksi:</strong></p>
                     <h5 class="text-success">Rp <span id="grand-total">0.00</span></h5>
                 </div>
             </div>
@@ -74,9 +74,9 @@
 
         {{-- Item Details --}}
         <div class="d-flex justify-content-between align-items-center">
-            <h3>Item Details</h3>
+            <h3>Daftar Menu</h3>
             <button type="button" id="add-item" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-circle"></i> Add Item
+                <i class="bi bi-plus-circle"></i> Tambah Menu
             </button>
         </div>
 
@@ -85,23 +85,23 @@
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
-                        <th>Item Name</th>
-                        <th>Unit Price</th>
+                        <th>Menu</th>
+                        <th>Harga</th>
                         <th>Qty</th>
-                        <th>Discount</th>
-                        <th>Subtotal</th>
-                        <th>Action</th>
+                        <th>Diskon</th>
+                        <th>Total Harga</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="items-container">
                     <tr id="empty-row">
-                        <td colspan="7" class="text-center">No items added</td>
+                        <td colspan="7" class="text-center">Belum ada menu yang di tambahkan</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <button type="submit" class="btn btn-success">Save Transaction</button>
+        <button type="submit" class="btn btn-success">Simpan Transaksi</button>
     </form>
 </div>
 
@@ -122,7 +122,7 @@
             <td>${itemIndex + 1}</td>
             <td>
                 <select name="items[${itemIndex}][item_id]" class="form-control item-select" required>
-                    <option value="">Select Item</option>
+                    <option value="">Pilih Menu</option>
                     @foreach($items as $item)
                         <option value="{{ $item->id }}" data-price="{{ $item->price }}">{{ $item->name }}</option>
                     @endforeach
@@ -163,7 +163,7 @@
             if (document.querySelectorAll('#items-container tr').length === 0) {
                 document.getElementById('items-container').innerHTML = `
                     <tr id="empty-row">
-                        <td colspan="7" class="text-center">No items added</td>
+                        <td colspan="7" class="text-center">Belum ada menu yang di tambahkan</td>
                     </tr>
                 `;
             }

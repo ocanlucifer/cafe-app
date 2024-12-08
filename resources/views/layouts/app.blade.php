@@ -141,16 +141,16 @@
                 @if (auth()->user()->role === 'admin')
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="masterDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-cogs"></i> Master
+                            <i class="fas fa-cogs"></i> Master Data
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="masterDropdown">
-                            <li><a class="dropdown-item" href="{{ route('categories.index') }}"><i class="fas fa-th"></i> Categories</a></li>
-                            <li><a class="dropdown-item" href="{{ route('types.index') }}"><i class="fas fa-cogs"></i> Types</a></li>
-                            <li><a class="dropdown-item" href="{{ route('items.index') }}"><i class="fas fa-cube"></i> Items</a></li>
-                            <li><a class="dropdown-item" href="{{ route('menus.index') }}"><i class="fas fa-utensils"></i> Menus</a></li>
-                            <li><a class="dropdown-item" href="{{ route('vendors.index') }}"><i class="fas fa-truck"></i> Vendors</a></li>
-                            <li><a class="dropdown-item" href="{{ route('customers.index') }}"><i class="fas fa-users"></i> Customers</a></li>
-                            <li><a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog"></i> User Management</a></li>
+                            <li><a class="dropdown-item" href="{{ route('categories.index') }}"><i class="fas fa-th"></i> Kategori</a></li>
+                            <li><a class="dropdown-item" href="{{ route('types.index') }}"><i class="fas fa-cogs"></i> Tipe</a></li>
+                            <li><a class="dropdown-item" href="{{ route('items.index') }}"><i class="fas fa-cube"></i> Barang</a></li>
+                            <li><a class="dropdown-item" href="{{ route('menus.index') }}"><i class="fas fa-utensils"></i> Menu</a></li>
+                            <li><a class="dropdown-item" href="{{ route('vendors.index') }}"><i class="fas fa-truck"></i> Supplier</a></li>
+                            <li><a class="dropdown-item" href="{{ route('customers.index') }}"><i class="fas fa-users"></i> Pelanggan</a></li>
+                            <li><a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog"></i> Pengguna</a></li>
                         </ul>
                     </li>
                 @endif
@@ -158,37 +158,37 @@
                 <!-- Transaksi Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transaksiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-exchange-alt"></i> Tansactions
+                        <i class="fas fa-exchange-alt"></i> Transaksi
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transaksiDropdown">
-                        <li><a class="dropdown-item" href="{{ route('sales.index') }}"><i class="fas fa-cash-register"></i> Sales</a></li>
-                        <li><a class="dropdown-item" href="{{ route('purchases.index') }}"><i class="fas fa-shopping-cart"></i> Purchases</a></li>
-                        <li><a class="dropdown-item" href="{{ route('issuings.index') }}"><i class="fas fa-dolly"></i> Issuing</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sales.index') }}"><i class="fas fa-cash-register"></i> Penjualan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('purchases.index') }}"><i class="fas fa-shopping-cart"></i> Pembelian</a></li>
+                        <li><a class="dropdown-item" href="{{ route('issuings.index') }}"><i class="fas fa-dolly"></i> Pengeluaran Barang</a></li>
                     </ul>
                 </li>
 
                 <!-- Report Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="reportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-chart-bar"></i> Report
+                        <i class="fas fa-chart-bar"></i> Laporan
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="reportDropdown">
-                        <li><a class="dropdown-item" href="{{ route('penjualan.reports') }}"><i class="fas fa-chart-line"></i> Sales Report</a></li>
-                        <li><a class="dropdown-item" href="{{ route('pembelian.reports') }}"><i class="fas fa-credit-card"></i> Purchase Report</a></li>
-                        <li><a class="dropdown-item" href="{{ route('pengeluaran.reports') }}"><i class="fas fa-truck"></i> Issuing Report</a></li>
-                        <li><a class="dropdown-item" href="{{ route('stock-mutations') }}"><i class="fas fa-sync-alt"></i> Stock Mutations</a></li>
+                        <li><a class="dropdown-item" href="{{ route('penjualan.reports') }}"><i class="fas fa-chart-line"></i> Laporan Penjualan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('pembelian.reports') }}"><i class="fas fa-credit-card"></i> Laporan Pembelian</a></li>
+                        <li><a class="dropdown-item" href="{{ route('pengeluaran.reports') }}"><i class="fas fa-truck"></i> Laporan Pengeluaran Barang</a></li>
+                        <li><a class="dropdown-item" href="{{ route('stock-mutations') }}"><i class="fas fa-sync-alt"></i> Mutasi Stok</a></li>
                     </ul>
                 </li>
                 <!-- User Account Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user"></i> Account
+                        <i class="fas fa-user"></i> {{ auth()->user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
                         <!-- Change Password Option -->
                         <li>
                             <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
-                                <i class="fas fa-key"></i> Change Password
+                                <i class="fas fa-key"></i> Ganti Password
                             </a>
                         </li>
                         <li>
@@ -247,31 +247,31 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                    <h5 class="modal-title" id="changePasswordModalLabel">Ganti Password</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('password.change') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <label for="currentPassword" class="form-label">Password Saat Ini</label>
                             <input type="password" class="form-control" id="currentPassword" name="current_password" required>
                         </div>
                         <!-- New Password -->
                         <div class="form-group">
-                            <label for="new_password">New Password</label>
+                            <label for="new_password">Password Baru</label>
                             <input type="password" name="new_password" id="new_password" class="form-control" required>
                         </div>
 
                         <!-- Confirm New Password -->
                         <div class="form-group">
-                            <label for="new_password_confirmation">Confirm New Password</label>
+                            <label for="new_password_confirmation">Konfirmasi Password Baru</label>
                             <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Change Password</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Ganti Password</button>
                     </div>
                 </form>
             </div>

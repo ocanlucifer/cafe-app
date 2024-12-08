@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Customer Management</h1>
+        <h1 class="mb-0">Kelola Pelanggan</h1>
         <button class="btn btn-primary btn-sm" id="open-create-form">
-            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Add Customer
+            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Tambah Pelanggan
         </button>
     </div>
 
     <!-- Success Message -->
     <div id="success-message" class="alert alert-success d-none" role="alert">
-        Customer saved successfully!
+        Data Pelanggan Berhasil Disimpan!
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name, contact or address" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="cari berdasarkan nama, kontak atau alamat" id="search" value="{{ $search }}">
             </div>
             {{-- <div class="col-md-2 col-sm-6"> --}}
                 <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
@@ -53,7 +53,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="customerModalLabel">Customer Form</h5>
+                    <h5 class="modal-title" id="customerModalLabel">Form Customer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -61,22 +61,22 @@
                         @csrf
                         <input type="hidden" name="id" id="customer-id">
                         <div class="mb-3">
-                            <label for="customer-name" class="form-label">Name</label>
+                            <label for="customer-name" class="form-label">Nama Pelanggan</label>
                             <input type="text" class="form-control" id="customer-name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="customer-contact" class="form-label">Contact</label>
+                            <label for="customer-contact" class="form-label">Kontak</label>
                             <input type="text" class="form-control" id="customer-contact" name="contact" required>
                         </div>
                         <div class="mb-3">
-                            <label for="customer-address" class="form-label">Address</label>
+                            <label for="customer-address" class="form-label">Alamat Planggan</label>
                             <input type="text" class="form-control" id="customer-address" name="address" required>
                         </div>
                         <div class="mb-3">
                             <label for="customer-status" class="form-label">Status</label>
                             <select id="customer-status" name="active" class="form-select" required>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
                             </select>
                         </div>
                     </form>
@@ -146,7 +146,7 @@
 
         // Open the Create customer form
         $('#open-create-form').on('click', function() {
-            $('#customerModalLabel').text('Add Customer');
+            $('#customerModalLabel').text('Tambah Data Pelanggan');
             $('#customer-form')[0].reset();
             $('#customer-id').val('');
             $('#customerModal').modal('show');
@@ -155,7 +155,7 @@
         // Open the Edit customer form
         $(document).on('click', '.edit-customer', function() {
             const customer = $(this).data();
-            $('#customerModalLabel').text('Edit Customer');
+            $('#customerModalLabel').text('Ubah Data Pelanggan');
             $('#customer-id').val(customer.id);
             $('#customer-name').val(customer.name);
             $('#customer-contact').val(customer.contact);
@@ -176,25 +176,25 @@
                 method: method,
                 data: formData,
                 success: function() {
-                    $('#success-message').removeClass('d-none').text('Customer saved successfully!');
+                    $('#success-message').removeClass('d-none').text('Data Pelanggan Berhasil Disimpan!');
                     setTimeout(() => { $('#success-message').addClass('d-none'); }, 3000);
                     $('#customerModal').modal('hide');
                     fetchCustomers();
                 },
-                error: function() { alert('Error saving customer.'); }
+                error: function() { alert('Terjadi kesalahan ketika menyimpan data pelanggan.'); }
             });
         });
 
         // Delete customer
         $(document).on('click', '.delete-customer', function() {
-            if (confirm('Are you sure you want to delete this customer?')) {
+            if (confirm('anda yakin ingin  menghapus data pelanggan ini?')) {
                 const customerId = $(this).data('id');
                 $.ajax({
                     url: `/customers/${customerId}`,
                     method: 'DELETE',
                     data: { _token: $('meta[name="csrf-token"]').attr('content') },
                     success: function() { fetchCustomers(); },
-                    error: function() { alert('Error deleting customer.'); }
+                    error: function() { alert('Terjadi kesalahan ketika menyimpan data pelanggan.'); }
                 });
             }
         });
@@ -207,7 +207,7 @@
                 method: 'POST',
                 data: { _token: $('meta[name="csrf-token"]').attr('content') },
                 success: function() { fetchCustomers(); },
-                error: function() { alert('Error updating customer status.'); }
+                error: function() { alert('Terjadi kesalahan ketika mengubah data pelanggan.'); }
             });
         });
     });

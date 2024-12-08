@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Stock Mutation Report</h1>
+        <h1 class="mb-0">Laporan Mutasi Stok</h1>
         <div>
             <form action="{{ route('stock-mutations') }}" method="GET" id="filter-form">
                 @csrf
                 <div class="input-group input-group-sm">
                     <input type="date" name="from_date" value="{{ $fromDate->toDateString() }}" class="form-control form-control-sm">
-                    <span class="input-group-text">to</span>
+                    <span class="input-group-text">sampai</span>
                     <input type="date" name="to_date" value="{{ $toDate->toDateString() }}" class="form-control form-control-sm">
                     <button type="submit" class="btn btn-primary btn-sm ms-2">Filter</button>
                     <button type="submit" name="export" value="excel" class="btn btn-success btn-sm ms-2">Export Excel</button>

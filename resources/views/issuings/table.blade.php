@@ -5,7 +5,7 @@
                 <th class="col-0">No.</th>
                 <th class="col-3">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="transaction_number" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Transaction Number
+                        Nomor Transaksi
                         @if ($sortBy === 'transaction_number')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -13,7 +13,7 @@
                 </th>
                 <th class="col-3">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="user_name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                       User Name
+                       Nama Pengguna
                         @if ($sortBy === 'user_name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -21,14 +21,14 @@
                 </th>
                 <th class="col-2 text-center">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="created_at" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Date
+                        Tanggal
                         @if ($sortBy === 'created_at')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
                     </a>
                 </th>
-                <th class="col-2 text-center">Remarks</th>
-                <th class="col-2 text-center">Actions</th>
+                <th class="col-2 text-center">Catatan</th>
+                <th class="col-2 text-center">Aksi</th>
             </tr>
         </thead>
         <tbody id="purchase-table-body">
@@ -41,15 +41,15 @@
                     <td>{{ $issuing->remarks }}</td>
                     <td class="text-center">
                         {{-- Edit Button --}}
-                        <a href="{{ route('issuings.edit', $issuing->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Purchase">
+                        <a href="{{ route('issuings.edit', $issuing->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Ubah Pengeluaran">
                             <i class="bi bi-pencil"></i>
                         </a>
 
                         {{-- Delete Button --}}
-                        <form action="{{ route('issuings.destroy', $issuing->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
+                        <form action="{{ route('issuings.destroy', $issuing->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Anda yakin ingin menghapus transaksi pengeluaran ini?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Delete Purchase">
+                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Pengeluaran">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -63,7 +63,7 @@
 <!-- Pagination Links -->
 <div class="d-flex justify-content-between align-items-center mt-3">
     <span class="text-muted">
-        Showing {{ $result->firstItem() }} to {{ $result->lastItem() }} of {{ $result->total() }} Purchases
+        Menampilkan {{ $result->firstItem() }} sampai {{ $result->lastItem() }} dari {{ $result->total() }} Pengeluaran Barang
     </span>
 
     <div>

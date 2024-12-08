@@ -5,7 +5,7 @@
                 <th class="col-0">No.</th>
                 <th class="col-3">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="transaction_number" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Transaction Number
+                        Nomor Transaksi
                         @if ($sortBy === 'transaction_number')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -13,23 +13,23 @@
                 </th>
                 <th class="col-3">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="vendor_name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Vendor Name
+                        Nama Supplier
                         @if ($sortBy === 'vendor_name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
                     </a>
                 </th>
-                <th class="col-3">Purchase Amount</th>
+                <th class="col-3">Nilai Transaksi</th>
                 <th class="col-2 text-center">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="created_at" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Date
+                        Tanggal
                         @if ($sortBy === 'created_at')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
                     </a>
                 </th>
-                <th>Entry By</th>
-                <th class="col-2 text-center">Actions</th>
+                <th>Pengguna</th>
+                <th class="col-2 text-center">Aksi</th>
             </tr>
         </thead>
         <tbody id="purchase-table-body">
@@ -43,15 +43,15 @@
                     <td>{{ $purchase->user->name }}</td>
                     <td class="text-center">
                         {{-- Edit Button --}}
-                        <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Purchase">
+                        <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Ubah Transaksi">
                             <i class="bi bi-pencil"></i>
                         </a>
 
                         {{-- Delete Button --}}
-                        <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
+                        <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('anda yakin ingin menghapus transaksi ini?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Delete Purchase">
+                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Transaksi">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -65,7 +65,7 @@
 <!-- Pagination Links -->
 <div class="d-flex justify-content-between align-items-center mt-3">
     <span class="text-muted">
-        Showing {{ $result->firstItem() }} to {{ $result->lastItem() }} of {{ $result->total() }} Purchases
+        Menampilkan {{ $result->firstItem() }} sampai {{ $result->lastItem() }} dari {{ $result->total() }} Pembelian
     </span>
 
     <div>

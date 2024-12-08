@@ -5,7 +5,7 @@
                 <th class="col-0">No.</th>
                 <th class="col-2">
                     <a href="#" class="sortable nav-link" data-sort-by="name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Name
+                        Nama Barang
                         @if ($sortBy === 'name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -13,7 +13,7 @@
                 </th>
                 <th class="col-2">
                     <a href="#" class="sortable nav-link" data-sort-by="category_name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Category
+                        Kategori
                         @if ($sortBy === 'category_name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -21,7 +21,7 @@
                 </th>
                 <th class="col-2">
                     <a href="#" class="sortable nav-link" data-sort-by="type_name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Type
+                        Tipe
                         @if ($sortBy === 'type_name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -29,7 +29,7 @@
                 </th>
                 <th class="col-1">
                     <a href="#" class="sortable nav-link" data-sort-by="price" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Price
+                        Harga
                         @if ($sortBy === 'price')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -37,7 +37,7 @@
                 </th>
                 <th class="col-2">
                     <a href="#" class="sortable nav-link" data-sort-by="stock" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Stock
+                        Stok
                         @if ($sortBy === 'stock')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -51,8 +51,8 @@
                         @endif
                     </a>
                 </th>
-                <th>registered By</th>
-                <th class="col-2 text-center">Actions</th>
+                <th>Di Daftarkan Oleh</th>
+                <th class="col-2 text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -66,18 +66,18 @@
                     <td>{{ $item->stock }}</td>
                     <td class="text-center">
                         <span class="badge {{ $item->active ? 'bg-success' : 'bg-danger' }}">
-                            {{ $item->active ? 'Active' : 'Inactive' }}
+                            {{ $item->active ? 'Aktif' : 'Nonaktif' }}
                         </span>
                     </td>
                     <td>{{ $item->user->name }}</td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-warning edit-item" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-category_id="{{ $item->category_id }}" data-type_id="{{ $item->type_id }}" data-price="{{ $item->price }}" data-stock="{{ $item->stock }}" data-active="{{ $item->active }}" data-bs-toggle="tooltip" title="Edit Item">
+                        <button class="btn btn-sm btn-warning edit-item" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-category_id="{{ $item->category_id }}" data-type_id="{{ $item->type_id }}" data-price="{{ $item->price }}" data-stock="{{ $item->stock }}" data-active="{{ $item->active }}" data-bs-toggle="tooltip" title="Ubah Data Barang">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <button class="btn btn-sm btn-danger delete-item" data-id="{{ $item->id }}" data-bs-toggle="tooltip" title="Delete Item">
+                        <button class="btn btn-sm btn-danger delete-item" data-id="{{ $item->id }}" data-bs-toggle="tooltip" title="Hapus Data Barang">
                             <i class="bi bi-trash"></i>
                         </button>
-                        <button class="btn btn-sm {{ $item->active ? 'btn-secondary' : 'btn-success' }} toggle-status" data-id="{{ $item->id }}" data-bs-toggle="tooltip" title="{{ $item->active ? 'Deactivate Item' : 'Activate Item' }}">
+                        <button class="btn btn-sm {{ $item->active ? 'btn-secondary' : 'btn-success' }} toggle-status" data-id="{{ $item->id }}" data-bs-toggle="tooltip" title="{{ $item->active ? 'Nonaktifkan' : 'Aktifkan' }}">
                             <i class="bi bi-toggle-{{ $item->active ? 'on' : 'off' }}"></i>
                         </button>
                     </td>
@@ -91,7 +91,7 @@
 <div class="d-flex justify-content-between align-items-center mt-3">
     <!-- Showing results text on the left -->
     <span class="text-muted">
-        Showing {{ $items->firstItem() }} to {{ $items->lastItem() }} of {{ $items->total() }} items
+        Menampilkan {{ $items->firstItem() }} sampai {{ $items->lastItem() }} dari {{ $items->total() }} Barang
     </span>
 
     <!-- Pagination links on the right -->

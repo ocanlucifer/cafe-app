@@ -53,8 +53,8 @@ class CustomerController extends Controller
             'active'        => $request->active ?? true,
             'user_id' => Auth::User()->id,
         ]);
-        // return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
-        return response()->json(['message' => 'Customer created successfully']);
+        // return redirect()->route('customers.index')->with('success', 'Data pelanggan Berhasil Di Simpan.');
+        return response()->json(['message' => 'Data pelanggan Berhasil Di Simpan']);
     }
 
     public function edit(Customer $customer)
@@ -77,15 +77,15 @@ class CustomerController extends Controller
             'active'        => $request->active ?? true,
             'user_id' => Auth::User()->id,
         ]);
-        // return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
-        return response()->json(['message' => 'Customer updated successfully']);
+        // return redirect()->route('customers.index')->with('success', 'Data Pelanggan Berhasil Di Ubah.');
+        return response()->json(['message' => 'Data Pelanggan Berhasil Di Ubah']);
     }
 
     public function destroy(Customer $customer)
     {
         $customer->delete();
         // return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
-        return response()->json(['message' => 'Customer deleted successfully']);
+        return response()->json(['message' => 'DAta Pelanggan Berhasil Di Hapus']);
     }
 
     public function toggleActive(Customer $customer)
@@ -95,7 +95,7 @@ class CustomerController extends Controller
         $customer->save();
 
         // return redirect()->route('customers.index');
-        return response()->json(['message' => 'Customer status updated successfully']);
+        return response()->json(['message' => 'Status Pelanggan Berhasil Di Ubah']);
     }
 
 }

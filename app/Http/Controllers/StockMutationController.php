@@ -37,7 +37,7 @@ class StockMutationController extends Controller
                             FROM stock_cards AS Y
                             WHERE Y.item_id = items.id
                               AND Y.created_at BETWEEN "' . $fromDate . '" AND "' . $toDate . '"
-                        )
+                        ) ORDER BY X.created_at ASC LIMIT 1
                      ) AS qty_begin'),
             DB::raw('COALESCE(SUM(stock_cards.qty_in), 0) AS qty_in'),
             DB::raw('COALESCE(SUM(stock_cards.qty_out), 0) AS qty_out'),
@@ -49,7 +49,7 @@ class StockMutationController extends Controller
                             FROM stock_cards AS O
                             WHERE O.item_id = items.id
                               AND O.created_at BETWEEN "' . $fromDate . '" AND "' . $toDate . '"
-                        )
+                        ) ORDER BY Z.created_at DESC LIMIT 1
                      ) AS qty_end'),
         ])
         ->leftJoin('stock_cards', 'items.id', '=', 'stock_cards.item_id') // Join stock_cards
@@ -94,7 +94,7 @@ class StockMutationController extends Controller
                             FROM stock_cards AS Y
                             WHERE Y.item_id = stock_cards.item_id
                               AND Y.created_at BETWEEN "' . $fromDate . '" AND "' . $toDate . '"
-                        )
+                        ) ORDER BY X.created_at ASC LIMIT 1
                     ) AS qty_begin'),
             DB::raw('SUM(stock_cards.qty_in) AS qty_in'),
             DB::raw('SUM(stock_cards.qty_out) AS qty_out'),
@@ -106,7 +106,7 @@ class StockMutationController extends Controller
                             FROM stock_cards AS O
                             WHERE O.item_id = stock_cards.item_id
                               AND O.created_at BETWEEN "' . $fromDate . '" AND "' . $toDate . '"
-                        )
+                        ) ORDER BY Z.created_at DESC LIMIT 1
                     ) AS qty_end')
         ])
         ->leftjoin('items', 'stock_cards.item_id', '=', 'items.id')

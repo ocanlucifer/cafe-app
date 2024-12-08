@@ -10,13 +10,13 @@
     </style>
 </head>
 <body>
-    <h1>Purchase Report (Per Vendor)</h1>
-    <p><strong>Period:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
+    <h1>Laporan Pembelian (Per Supplier)</h1>
+    <p><strong>Periode:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
     <table>
         <thead>
             <tr>
                 <th>No.</th>
-                <th>Vendor</th>
+                <th>Supplier</th>
                 <th>Total Amount</th>
             </tr>
         </thead>

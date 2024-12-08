@@ -61,9 +61,9 @@ class CategoryController extends Controller
             'name' => $request->name,
             'user_id' => Auth::User()->id,
         ]);
-        // return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        // return redirect()->route('categories.index')->with('success', 'Kategori Berhasil Di Simpan.');
 
-        return response()->json(['message' => 'Category created successfully!'], 201);
+        return response()->json(['message' => 'Kategori Berhasil Di Simpan!'], 201);
     }
 
     public function edit(Category $category)
@@ -78,15 +78,15 @@ class CategoryController extends Controller
             'name' => $request->name,
             'user_id' => Auth::User()->id,
         ]);
-        return response()->json(['message' => 'Category updated successfully!'], 200);
-        // return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        return response()->json(['message' => 'Kategori Berhasil Di Ubah!'], 200);
+        // return redirect()->route('categories.index')->with('success', 'Kategori Berhasil Di Ubah.');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return response()->json(['message' => 'Category deleted successfully!'], 200);
-        // return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+        return response()->json(['message' => 'Kategori Berhasil Di Hapus!'], 200);
+        // return redirect()->route('categories.index')->with('success', 'Kategori Berhasil Di Hapus.');
     }
 
 }

@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Item Management</h1>
+        <h1 class="mb-0">Kelola Barang</h1>
         <button class="btn btn-primary btn-sm" id="open-create-form">
-            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Add Item
+            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Tambah Barang
         </button>
     </div>
 
     <!-- Success Message -->
     <div id="success-message" class="alert alert-success d-none" role="alert">
-        Item saved successfully!
+        Data Barang berhasil disimpan!
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name, category, type, or price" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari berdasarkan nama, kategori, tipe, atau harga" id="search" value="{{ $search }}">
             </div>
             {{-- <div class="col-md-2 col-sm-6"> --}}
                 <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
@@ -55,7 +55,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="itemModalLabel">Item Form</h5>
+                    <h5 class="modal-title" id="itemModalLabel">Form Barang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -63,11 +63,11 @@
                         @csrf
                         <input type="hidden" name="id" id="item-id">
                         <div class="mb-3">
-                            <label for="item-name" class="form-label">Name</label>
+                            <label for="item-name" class="form-label">Nama Barang</label>
                             <input type="text" class="form-control" id="item-name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="item-category_id" class="form-label">Category</label>
+                            <label for="item-category_id" class="form-label">Kategori</label>
                             <select name="category_id" id="item-category_id" class="form-select" required>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -75,7 +75,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="item-type_id" class="form-label">Type</label>
+                            <label for="item-type_id" class="form-label">Tipe</label>
                             <select name="type_id" id="item-type_id" class="form-select" required>
                                 @foreach ($types as $type)
                                     <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -83,18 +83,18 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="item-price" class="form-label">Price</label>
+                            <label for="item-price" class="form-label">Harga</label>
                             <input type="text" class="form-control" id="item-price" name="price" required>
                         </div>
                         {{-- <div class="mb-3"> --}}
-                            <label for="item-stock" class="form-label" hidden>Stock</label>
+                            <label for="item-stock" class="form-label" hidden>Stok</label>
                             <input type="number" class="form-control" id="item-stock" name="stock" hidden>
                         {{-- </div> --}}
                         <div class="mb-3">
                             <label for="item-status" class="form-label">Status</label>
                             <select id="item-status" name="active" class="form-select" required>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Non Aktif</option>
                             </select>
                         </div>
                     </form>
@@ -164,7 +164,7 @@
 
         // Open the Create item form
         $('#open-create-form').on('click', function() {
-            $('#itemModalLabel').text('Add Item');
+            $('#itemModalLabel').text('Tambah Barang');
             $('#item-form')[0].reset();
             $('#item-id').val('');
             $('#itemModal').modal('show');
@@ -173,7 +173,7 @@
         // Open the Edit item form
         $(document).on('click', '.edit-item', function() {
             const item = $(this).data();
-            $('#itemModalLabel').text('Edit Item');
+            $('#itemModalLabel').text('Ubah Barang');
             $('#item-id').val(item.id);
             $('#item-name').val(item.name);
             $('#item-category_id').val(item.category_id);
@@ -196,25 +196,25 @@
                 method: method,
                 data: formData,
                 success: function() {
-                    $('#success-message').removeClass('d-none').text('Item saved successfully!');
+                    $('#success-message').removeClass('d-none').text('Data Barang berhasil disimpan!');
                     setTimeout(() => { $('#success-message').addClass('d-none'); }, 3000);
                     $('#itemModal').modal('hide');
                     fetchItems();
                 },
-                error: function() { alert('Error saving item.'); }
+                error: function() { alert('Terjadi kesalahan saat menyimpan data barang.'); }
             });
         });
 
         // Delete item
         $(document).on('click', '.delete-item', function() {
-            if (confirm('Are you sure you want to delete this item?')) {
+            if (confirm('anda yakin ingin menghapus data barang ini?')) {
                 const itemId = $(this).data('id');
                 $.ajax({
                     url: `/items/${itemId}`,
                     method: 'DELETE',
                     data: { _token: $('meta[name="csrf-token"]').attr('content') },
                     success: function() { fetchItems(); },
-                    error: function() { alert('Error deleting item.'); }
+                    error: function() { alert('Terjadi kesalahan ketika menghapus data barang.'); }
                 });
             }
         });
@@ -227,7 +227,7 @@
                 method: 'POST',
                 data: { _token: $('meta[name="csrf-token"]').attr('content') },
                 success: function() { fetchItems(); },
-                error: function() { alert('Error updating item status.'); }
+                error: function() { alert('terjadi kesalahan ketika ngubah status barang.'); }
             });
         });
     });

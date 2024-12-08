@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Vendor Management</h1>
+        <h1 class="mb-0">Kelola Supplier</h1>
         <button class="btn btn-primary btn-sm" id="open-create-form">
-            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Add Vendor
+            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Tambah Supplier
         </button>
     </div>
 
     <!-- Success Message -->
     <div id="success-message" class="alert alert-success d-none" role="alert">
-        Vendor saved successfully!
+        Data Supplier berhasil di simpan!
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name, contact, or address" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="cari berdasarkan nama, kontak, atau alamat" id="search" value="{{ $search }}">
             </div>
             {{-- <div class="col-md-2 col-sm-6"> --}}
                 <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
@@ -53,7 +53,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="vendorModalLabel">Vendor Form</h5>
+                    <h5 class="modal-title" id="vendorModalLabel">Form Supplier</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -61,22 +61,22 @@
                         @csrf
                         <input type="hidden" name="id" id="vendor-id">
                         <div class="mb-3">
-                            <label for="vendor-name" class="form-label">Name</label>
+                            <label for="vendor-name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="vendor-name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="vendor-contact" class="form-label">Contact</label>
+                            <label for="vendor-contact" class="form-label">Kontak</label>
                             <input type="text" class="form-control" id="vendor-contact" name="contact" required>
                         </div>
                         <div class="mb-3">
-                            <label for="vendor-address" class="form-label">Address</label>
+                            <label for="vendor-address" class="form-label">Alamat</label>
                             <input type="text" class="form-control" id="vendor-address" name="address" required>
                         </div>
                         <div class="mb-3">
                             <label for="vendor-status" class="form-label">Status</label>
                             <select id="vendor-status" name="active" class="form-select" required>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Nonaktif</option>
                             </select>
                         </div>
                     </form>
@@ -146,7 +146,7 @@
 
         // Open the Create vendor form
         $('#open-create-form').on('click', function() {
-            $('#vendorModalLabel').text('Add Vendor');
+            $('#vendorModalLabel').text('Tambah Supplier');
             $('#vendor-form')[0].reset();
             $('#vendor-id').val('');
             $('#vendorModal').modal('show');
@@ -155,7 +155,7 @@
         // Open the Edit vendor form
         $(document).on('click', '.edit-vendor', function() {
             const vendor = $(this).data();
-            $('#vendorModalLabel').text('Edit Vendor');
+            $('#vendorModalLabel').text('Ubah Supplier');
             $('#vendor-id').val(vendor.id);
             $('#vendor-name').val(vendor.name);
             $('#vendor-contact').val(vendor.contact);
@@ -176,25 +176,25 @@
                 method: method,
                 data: formData,
                 success: function() {
-                    $('#success-message').removeClass('d-none').text('Vendor saved successfully!');
+                    $('#success-message').removeClass('d-none').text('Data Supplier berhasil di simpan!');
                     setTimeout(() => { $('#success-message').addClass('d-none'); }, 3000);
                     $('#vendorModal').modal('hide');
                     fetchVendors();
                 },
-                error: function() { alert('Error saving vendor.'); }
+                error: function() { alert('terjadi kesalahan ketika menyimpan data supplier.'); }
             });
         });
 
         // Delete vendor
         $(document).on('click', '.delete-vendor', function() {
-            if (confirm('Are you sure you want to delete this vendor?')) {
+            if (confirm('anda yakin ingin menghapus data supplier ini?')) {
                 const vendorId = $(this).data('id');
                 $.ajax({
                     url: `/vendors/${vendorId}`,
                     method: 'DELETE',
                     data: { _token: $('meta[name="csrf-token"]').attr('content') },
                     success: function() { fetchVendors(); },
-                    error: function() { alert('Error deleting vendor.'); }
+                    error: function() { alert('terjadi kesalahan ketika menghapus supplier.'); }
                 });
             }
         });
@@ -207,7 +207,7 @@
                 method: 'POST',
                 data: { _token: $('meta[name="csrf-token"]').attr('content') },
                 success: function() { fetchVendors(); },
-                error: function() { alert('Error updating vendor status.'); }
+                error: function() { alert('terjadi kesalahan ketika mengubah status suppplier.'); }
             });
         });
     });

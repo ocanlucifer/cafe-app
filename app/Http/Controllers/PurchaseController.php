@@ -130,10 +130,10 @@ class PurchaseController extends Controller
 
             DB::commit();
 
-            return redirect()->route('purchases.index')->with('success', 'Purchase created successfully.');
+            return redirect()->route('purchases.index')->with('success', 'Transaksi Pembelian Berhasil di buat.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to create purchase: ' . $e->getMessage());
+            return back()->with('error', 'Gagal Membuat Transaksi Pembelian: ' . $e->getMessage());
         }
     }
 
@@ -211,10 +211,10 @@ class PurchaseController extends Controller
 
             DB::commit();
 
-            return redirect()->route('purchases.index')->with('success', 'Purchase updated successfully.');
+            return redirect()->route('purchases.index')->with('success', 'Transaksi Pembelian Berhasil Di Ubah.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to update purchase: ' . $e->getMessage());
+            return back()->with('error', 'Gagal Memperbarui Transaksi Pembelian: ' . $e->getMessage());
         }
     }
 
@@ -245,9 +245,9 @@ class PurchaseController extends Controller
             StockCard::where('transaction_number',$purchase->transaction_number)->delete();
 
             $purchase->delete();
-            return redirect()->route('purchases.index')->with('success', 'Purchase deleted successfully.');
+            return redirect()->route('purchases.index')->with('success', 'Transaksi Pembelian Berhasil Di Hapus.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to delete purchase: ' . $e->getMessage());
+            return back()->with('error', 'Gagal Menghapus Transaksi Pembelian: ' . $e->getMessage());
         }
     }
 

@@ -94,7 +94,7 @@ class MenuController extends Controller
             'user_id' => Auth::User()->id,
         ]);
         // return redirect()->route('menus.index')->with('success', 'Item created successfully.');
-        return response()->json(['success' => 'Menu Created successfully.']);
+        return response()->json(['success' => 'Data Menu Berhasil Di simpan.']);
     }
 
     public function edit(MenuItem $item)
@@ -121,14 +121,14 @@ class MenuController extends Controller
             'user_id' => Auth::User()->id,
         ]);
         // return redirect()->route('menus.index')->with('success', 'Item updated successfully.');
-        return response()->json(['success' => 'Menu updated successfully.']);
+        return response()->json(['success' => 'Data Menu berhasil di ubah.']);
     }
 
     public function destroy(MenuItem $menu)
     {
         $menu->delete();
         // return redirect()->route('menus.index')->with('success', 'Item deleted successfully.');
-        return response()->json(['success' => 'Menu deleted successfully.']);
+        return response()->json(['success' => 'Data Menu berhasil di hapus.']);
     }
 
     public function toggleActive(MenuItem $menu)
@@ -138,7 +138,7 @@ class MenuController extends Controller
         $menu->save();
 
         // return redirect()->route('menus.index');
-        return response()->json(['success' => 'Menu status updated successfully.']);
+        return response()->json(['success' => 'Status Menu berhasil di perbarui.']);
     }
 
 }

@@ -5,7 +5,7 @@
                 <th class="col-0">No.</th>
                 <th class="col-2">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="transaction_number" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Transaction Number
+                        Nomor Transaksi
                         @if ($sortBy === 'transaction_number')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
@@ -13,25 +13,25 @@
                 </th>
                 <th class="col-3">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="customer_name" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Customer Name
+                        Nama Pelanggan
                         @if ($sortBy === 'customer_name')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
                     </a>
                 </th>
-                <th class="col-2">Total Before Discount</th>
-                <th class="col-1">Total Discount</th>
-                <th class="col-2">Total After Discount</th>
+                <th class="col-2">Total Sebelum Diskon</th>
+                <th class="col-1">Total Diskon</th>
+                <th class="col-2">Total Setelah Diskon</th>
                 <th class="col-1 text-center">
                     <a href="javascript:void(0);" class="sortable nav-link" data-sort-by="created_at" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
-                        Date
+                        Tanggal
                         @if ($sortBy === 'created_at')
                             <i class="fas fa-sort-{{ $order === 'asc' ? 'down' : 'up' }}"></i>
                         @endif
                     </a>
                 </th>
-                <th>Entry By</th>
-                <th class="col-2 text-center">Actions</th>
+                <th>Pengguna</th>
+                <th class="col-2 text-center">Aksi</th>
             </tr>
         </thead>
         <tbody id="sales-table-body">
@@ -47,15 +47,15 @@
                     <td>{{ $sale->user->name }}</td>
                     <td class="text-center">
                         {{-- Edit Button --}}
-                        <a href="{{ route('sales.edit', $sale->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Transaction">
+                        <a href="{{ route('sales.edit', $sale->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Ubah Transaksi">
                             <i class="bi bi-pencil"></i>
                         </a>
 
                         {{-- Delete Button --}}
-                        <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this transaction?')">
+                        <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('anda yakin ingin menghapus transaksi ini?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Delete Transaction">
+                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Transaksi">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -69,7 +69,7 @@
 <!-- Pagination Links -->
 <div class="d-flex justify-content-between align-items-center mt-3">
     <span class="text-muted">
-        Showing {{ $result->firstItem() }} to {{ $result->lastItem() }} of {{ $result->total() }} Sales
+        Menampilkan {{ $result->firstItem() }} sampai {{ $result->lastItem() }} dari {{ $result->total() }} Penjualan
     </span>
 
     <div>

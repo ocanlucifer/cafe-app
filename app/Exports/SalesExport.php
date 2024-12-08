@@ -22,17 +22,17 @@ class SalesExport implements FromCollection, WithHeadings
         foreach ($this->sales as $sale) {
             foreach ($sale->details as $detail) {
                 $data[] = [
-                    'Transaction Number' => $sale->transaction_number,
-                    'Customer' => $sale->customer->name,
-                    'Item Name' => $detail->menuItem->name,
+                    'Nomor Transaksi' => $sale->transaction_number,
+                    'Pelanggan' => $sale->customer->name,
+                    'Nama Menu' => $detail->menuItem->name,
                     'Quantity' => $detail->quantity,
-                    'Price' => $detail->price,
-                    'Discount' => $detail->discount,
+                    'Harga' => $detail->price,
+                    'Diskon' => $detail->discount,
                     'Subtotal' => $detail->subtotal,
-                    'Total Price' => $sale->total_price,
-                    'Total Discount' => $sale->discount,
-                    'Total After Discount' => $sale->total_price - $sale->discount,
-                    'Date' => $sale->created_at->format('d-m-Y'),
+                    'Total Harga' => $sale->total_price,
+                    'Total Diskon' => $sale->discount,
+                    'Total Setelah Diskon' => $sale->total_price - $sale->discount,
+                    'Tanggal' => $sale->created_at->format('d-m-Y'),
                 ];
             }
         }
@@ -43,7 +43,7 @@ class SalesExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Transaction Number', 'Customer', 'Item Name', 'Quantity', 'Price', 'Discount', 'Subtotal', 'Total Price', 'Total Discount', 'Total After Discount', 'Date',
+            'Nomor Transaksi', 'Pelanggan', 'Nama Menu', 'Quantity', 'Harga', 'Diskon', 'Subtotal', 'Total Harga', 'Total Diskon', 'Total Setelah Diskon', 'Tanggal',
         ];
     }
 }

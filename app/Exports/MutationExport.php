@@ -23,11 +23,11 @@ class MutationExport implements FromCollection, WithHeadings
 
         foreach ($this->stockMutations as $mutation) {
                 $data[] = [
-                    'Item Name' => $mutation->name,
-                    'Begin Qty' => $mutation->qty_begin,
-                    'In Qty' => $mutation->qty_in,
-                    'Out Qty' => $mutation->qty_out,
-                    'End Qty' => $mutation->qty_end,
+                    'Nama Barang' => $mutation->name,
+                    'Qty Awal' => $mutation->qty_begin,
+                    'Qty Masuk' => $mutation->qty_in,
+                    'Qty Keluar' => $mutation->qty_out,
+                    'Qty Akhir' => $mutation->qty_end,
                 ];
         }
 
@@ -37,7 +37,7 @@ class MutationExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Item Name', 'Begin Qty', 'In Qty', 'Out Qty', 'End Qty',
+            'Nama Barang', 'Qty Awal', 'Qty Masuk', 'Qty Keluar', 'Qty Akhir',
         ];
     }
 }

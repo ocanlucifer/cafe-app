@@ -59,14 +59,14 @@ class UserController extends Controller
             'is_active' => $request->is_active ?? true,
         ]);
 
-        return response()->json(['success' => 'User created successfully!']);
+        return response()->json(['success' => 'Data Pengguna Berhasil Di Buat!']);
     }
 
     public function update(Request $request, $id)
     {
         $user = User::find($id);
         if (!$user) {
-            return response()->json(['error' => 'User not found!']);
+            return response()->json(['error' => 'Pengguna Tidak Di Temukan!']);
         }
 
         $user->update([
@@ -77,7 +77,7 @@ class UserController extends Controller
             'is_active' => $request->is_active,
         ]);
 
-        return response()->json(['success' => 'User updated successfully!']);
+        return response()->json(['success' => 'Data Pengguna Berhasil Di Ubah!']);
     }
 
 
@@ -87,10 +87,10 @@ class UserController extends Controller
 
         if ($user) {
             $user->delete();
-            return response()->json(['success' => 'User deleted successfully!']);
+            return response()->json(['success' => 'Data Pengguna Berhasil Di Hapus!']);
         }
 
-        return response()->json(['error' => 'User not found!']);
+        return response()->json(['error' => 'Pengguna Tidak Di Temukan!']);
     }
 
     public function toggleStatus($id)
@@ -99,7 +99,7 @@ class UserController extends Controller
         $user->is_active = !$user->is_active; // Toggle status
         $user->save();
 
-        return response()->json(['error' => 'User status updated successfully.']);
+        return response()->json(['error' => 'Status Pengguna Berhasil Di Perbarui.']);
         // return redirect()->back()->with('success', 'User status updated successfully.');
     }
 
@@ -119,7 +119,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => "Password for {$user->name} has been reset.",
+            'message' => "Password Pengguna {$user->name} Telah berhasil di reset.",
             'new_password' => $newPassword, // Optional: include the new password in the response
         ]);
     }
@@ -134,7 +134,7 @@ class UserController extends Controller
         $user = User::findOrFail(Auth::user()->id); ;
 
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+            return back()->withErrors(['current_password' => 'Password saat ini Salah.']);
         }
 
         $user->password = Hash::make($request->new_password);
@@ -143,7 +143,7 @@ class UserController extends Controller
         //     'password' => Hash::make($request->new_password),
         // ]);
 
-        return back()->with('success', 'Password changed successfully.');
+        return back()->with('success', 'Password Anda Telah berhasil di perbarui.');
     }
 
 }

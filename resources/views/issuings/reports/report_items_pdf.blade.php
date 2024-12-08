@@ -10,14 +10,14 @@
     </style>
 </head>
 <body>
-    <h1>Issuing Items Report</h1>
-    <p><strong>Period:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
+    <h1>Laporan Pengeluaran Barang</h1>
+    <p><strong>Periode:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
     <table>
         <thead>
             <tr>
                 <th>No.</th>
-                <th>Item</th>
-                <th>Total Quantity</th>
+                <th>Nama Barang</th>
+                <th>Total Qty</th>
             </tr>
         </thead>
         <tbody>

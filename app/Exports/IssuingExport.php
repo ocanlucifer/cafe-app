@@ -20,8 +20,8 @@ class IssuingExport implements FromCollection, WithHeadings
 
         foreach ($this->items as $item) {
                 $data[] = [
-                    'Item Name' => $item->name,
-                    'Total Quantity' => $item->total_quantity
+                    'Nama Barang' => $item->name,
+                    'Total Qty' => $item->total_quantity
                 ];
         }
 
@@ -31,7 +31,7 @@ class IssuingExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Item Name', 'Total Quantity',
+            'Nama Barang', 'Total Qty',
         ];
     }
 }
