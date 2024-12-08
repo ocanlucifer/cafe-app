@@ -20,7 +20,7 @@ class RoleMiddleware
         // Cek apakah pengguna sedang login dan memiliki salah satu role yang diizinkan
         if (!$user || !in_array($user->role, $roles)) {
             // abort(403, 'Unauthorized access.');
-            return redirect('/unauthorized')->with('error', 'You are not allowing to access '. $target .'.');
+            return redirect('/unauthorized')->with('error', 'anda tidak memiliki hak untuk mengakses halaman '. $target .'.');
         }
 
         return $next($request);

@@ -2,10 +2,10 @@
     <thead class="table-dark">
         <tr>
             <th>No.</th>
-            <th>Customer</th>
-            <th>Total Sales</th>
-            <th>Total Discount</th>
-            <th>Total After Discount</th>
+            <th>Pelanggan</th>
+            <th>Total Penjualan</th>
+            <th>Total Diskon</th>
+            <th>Total Nilai Transaksi</th>
         </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
 <!-- Pagination Links -->
 <div class="d-flex justify-content-between align-items-center mt-3">
     <span class="text-muted">
-        Showing {{ $sales->firstItem() }} to {{ $sales->lastItem() }} of {{ $sales->total() }} Customer
+        Menampilkan {{ $sales->firstItem() }} sampai {{ $sales->lastItem() }} dari {{ $sales->total() }} Pelanggan
     </span>
 
     <div>

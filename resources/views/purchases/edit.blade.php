@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-md-8">
-            <h3 class="display-6">Edit Purchase</h3>
+            <h3 class="display-6">Ubah Transaksi Pembelian</h3>
         </div>
         <div class="col-md-4 text-end">
             <a href="{{ route('purchases.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-chevron-left"></i>
-                Back to Transaction List
+                Kembali ke daftar Transaksi
             </a>
         </div>
     </div>
@@ -32,9 +32,9 @@
         {{-- Vendor and Purchase Date --}}
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="vendor_id" class="form-label">Vendor</label>
+                <label for="vendor_id" class="form-label">Supplier</label>
                 <select name="vendor_id" id="vendor_id" class="form-control" required>
-                    <option value="">Select Vendor</option>
+                    <option value="">Pilih Supplier</option>
                     @foreach($vendors as $vendor)
                         <option value="{{ $vendor->id }}" {{ $vendor->id == $purchase->vendor_id ? 'selected' : '' }}>
                             {{ $vendor->name }}
@@ -43,7 +43,7 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <label for="purchase_date" class="form-label">Purchase Date</label>
+                <label for="purchase_date" class="form-label">Tanggal Pembelian</label>
                 <input type="datetime-local" name="purchase_date" id="purchase_date" class="form-control"
                        value="{{ old('purchase_date', $purchase->purchase_date->format('Y-m-d\TH:i')) }}" required>
             </div>
@@ -51,9 +51,9 @@
 
         {{-- Item Details --}}
         <div class="d-flex justify-content-between align-items-center">
-            <h3>Item Details</h3>
+            <h3>Daftar Barang</h3>
             <button type="button" id="add-item" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-circle"></i> Add Item
+                <i class="bi bi-plus-circle"></i> Tambah Barang
             </button>
         </div>
 
@@ -62,11 +62,11 @@
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
-                        <th>Item Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
-                        <th>Action</th>
+                        <th>Nama Barang</th>
+                        <th>Harga</th>
+                        <th>Qty</th>
+                        <th>Total Harga</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="items-container">
@@ -75,7 +75,7 @@
                             <td>{{ $index + 1 }}</td>
                             <td>
                                 <select name="items[{{ $index }}][item_id]" class="form-control item-select" required>
-                                    <option value="">Select Item</option>
+                                    <option value="">Pilih Barang</option>
                                     @foreach($items as $item)
                                         <option value="{{ $item->id }}" data-price="{{ $item->price }}"
                                                 {{ $item->id == $detail->item_id ? 'selected' : '' }}>
@@ -101,7 +101,7 @@
                         </tr>
                     @empty
                         <tr id="empty-row">
-                            <td colspan="6" class="text-center">No items added</td>
+                            <td colspan="6" class="text-center">Belum ada barang yang di tambahkan</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -110,11 +110,11 @@
 
         {{-- Total Amount --}}
         <div class="mb-3">
-            <label for="total_amount" class="form-label">Total Amount</label>
+            <label for="total_amount" class="form-label">Total Nilai Transaksi</label>
             <input type="number" name="total_amount" id="total_amount" class="form-control" value="{{ $purchase->total_amount }}" readonly>
         </div>
 
-        <button type="submit" class="btn btn-success">Update Purchase</button>
+        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
     </form>
 </div>
 
@@ -134,7 +134,7 @@
             <td>${itemIndex + 1}</td>
             <td>
                 <select name="items[${itemIndex}][item_id]" class="form-control item-select" required>
-                    <option value="">Select Item</option>
+                    <option value="">Pilih Barang</option>
                     @foreach($items as $item)
                         <option value="{{ $item->id }}" data-price="{{ $item->price }}">{{ $item->name }}</option>
                     @endforeach
@@ -169,7 +169,7 @@
             if (document.querySelectorAll('#items-container tr').length === 0) {
                 document.getElementById('items-container').innerHTML = `
                     <tr id="empty-row">
-                        <td colspan="6" class="text-center">No items added</td>
+                        <td colspan="6" class="text-center">Belum ada barang yang di tambahkan</td>
                     </tr>
                 `;
             }

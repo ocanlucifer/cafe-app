@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Types</h1>
+        <h1 class="mb-0">Kelola Tipe</h1>
         <button class="btn btn-primary btn-sm" id="open-create-form">
-            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Add Type
+            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Tambah Tipe
         </button>
     </div>
 
     <!-- Success Message -->
     <div id="success-message" class="alert alert-success d-none" role="alert">
-        type saved successfully!
+        Tipe Berhasil Di Simpan!
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari Berdasarkan Nama" id="search" value="{{ $search }}">
             </div>
             {{-- <div class="col-md-2 col-sm-6"> --}}
                 <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
@@ -51,7 +51,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="typeModalLabel">Type Form</h5>
+                    <h5 class="modal-title" id="typeModalLabel">Form Tipe</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -59,7 +59,7 @@
                         @csrf
                         <input type="hidden" name="id" id="type-id">
                         <div class="mb-3">
-                            <label for="type-name" class="form-label">Type Name</label>
+                            <label for="type-name" class="form-label">Nama Tipe</label>
                             <input type="text" class="form-control" id="type-name" name="name" required>
                         </div>
                     </form>
@@ -135,7 +135,7 @@
 
         // Open the Create type form
         $('#open-create-form').on('click', function() {
-            $('#typeModalLabel').text('Create type');
+            $('#typeModalLabel').text('Buat Tipe');
             $('#type-form')[0].reset(); // Clear form
             $('#type-id').val(''); // Clear hidden id field
             $('#typeModal').modal('show');
@@ -145,7 +145,7 @@
         $(document).on('click', '.edit-type', function() {
             const typeId = $(this).data('id');
             const typeName = $(this).data('name');
-            $('#typeModalLabel').text('Edit type');
+            $('#typeModalLabel').text('Ubah Tipe');
             $('#type-id').val(typeId);
             $('#type-name').val(typeName);
             $('#typeModal').modal('show');
@@ -165,7 +165,7 @@
                 data: formData,
                 success: function(response) {
                     // Show success message
-                    $('#success-message').removeClass('d-none').text('type saved successfully!');
+                    $('#success-message').removeClass('d-none').text('Tipe Berhasil Di Simpan!');
 
                     // Hide success message after 3 seconds
                     setTimeout(function() {
@@ -176,7 +176,7 @@
                     fetchTypes();  // Reload the table after saving
                 },
                 error: function(xhr) {
-                    alert('An error occurred while saving the type.');
+                    alert('Terjadi Kesalahan ketika menyimpan Tipe.');
                 }
             });
         });
@@ -187,7 +187,7 @@
             const typeName = $(this).data('name');
 
             // Confirm before deletion
-            if (confirm(`Are you sure you want to delete the type "${typeName}"?`)) {
+            if (confirm(`Anda yakin ingin menghapus tipe "${typeName}"?`)) {
                 $.ajax({
                     url: `/types/${typeId}`,
                     method: 'DELETE',
@@ -196,7 +196,7 @@
                     },
                     success: function(response) {
                         // Show success message
-                        $('#success-message').removeClass('d-none').text('type deleted successfully!');
+                        $('#success-message').removeClass('d-none').text('Tipe berhasil di hapus!');
 
                         // Hide success message after 3 seconds
                         setTimeout(function() {
@@ -206,7 +206,7 @@
                         fetchTypes(); // Reload the table after deletion
                     },
                     error: function(xhr) {
-                        alert('An error occurred while deleting the type.');
+                        alert('Terjadi kesalahan ketika menghapus tipe.');
                     }
                 });
             }

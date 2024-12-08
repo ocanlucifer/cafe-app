@@ -3,11 +3,11 @@
         <thead class="table-dark">
             <tr>
                 <th>No.</th>
-                <th>Item Name</th>
-                <th>Begin Qty</th>
-                <th>In Qty</th>
-                <th>Out Qty</th>
-                <th>End Qty</th>
+                <th>Nama Barang</th>
+                <th>Qty Awal</th>
+                <th>Qty Masuk</th>
+                <th>Qty Keluar</th>
+                <th>Qty Akhir</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
 <!-- Pagination Links -->
 <div class="d-flex justify-content-between align-items-center mt-3">
     <span class="text-muted">
-        Showing {{ $stockMutations->firstItem() }} to {{ $stockMutations->lastItem() }} of {{ $stockMutations->total() }} Items
+        Menampilkan {{ $stockMutations->firstItem() }} sampai {{ $stockMutations->lastItem() }} dari {{ $stockMutations->total() }} Barang
     </span>
 
     <div>

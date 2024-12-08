@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Sales Report</h1>
+        <h1 class="mb-0">Laporan Penjualan</h1>
         <div class="row g-2 justify-content-end">
             <div class="col-md-12">
                 <!-- Form untuk filter dan dropdown -->
@@ -11,7 +11,7 @@
                     @csrf
                     <div class="input-group input-group-sm">
                         <input type="date" name="from_date" value="{{ $fromDate->toDateString() }}" class="form-control form-control-sm">
-                        <span class="input-group-text">to</span>
+                        <span class="input-group-text">sampai</span>
                         <input type="date" name="to_date" value="{{ $toDate->toDateString() }}" class="form-control form-control-sm">
                         <button type="submit" class="btn btn-primary btn-sm ms-2">Filter</button>
                         <!-- Tombol export -->
@@ -25,8 +25,8 @@
                     <div class="d-flex mt-3">
                         <!-- Dropdown untuk memilih grup laporan -->
                         <select name="group" class="form-select form-select-sm me-2" id="group" onchange="$('#filter-form').submit()">
-                            <option value="item" {{ $group == 'item' ? 'selected' : '' }}>Per Item</option>
-                            <option value="customer" {{ $group == 'customer' ? 'selected' : '' }}>Per Customer</option>
+                            <option value="item" {{ $group == 'item' ? 'selected' : '' }}>Per Menu</option>
+                            <option value="customer" {{ $group == 'customer' ? 'selected' : '' }}>Per Pelanggan</option>
                         </select>
 
                         <!-- Dropdown untuk memilih jumlah per halaman -->

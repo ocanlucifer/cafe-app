@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Categories</h1>
+        <h1 class="mb-0">Kelola Kategori</h1>
         <button class="btn btn-primary btn-sm" id="open-create-form">
-            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Add Categories
+            <i class="bi bi-plus-lg" style="font-size: 1rem;"></i> Tambah Kategori
         </button>
     </div>
 
     <!-- Success Message -->
     <div id="success-message" class="alert alert-success d-none" role="alert">
-        Category saved successfully!
+        Kategori berhasil disimpan!
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by name" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari berdasarkan nama" id="search" value="{{ $search }}">
             </div>
             {{-- <div class="col-md-2 col-sm-6"> --}}
                 <select name="sort_by" id="sort_by" class="form-select form-select-sm" hidden>
@@ -51,7 +51,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="categoryModalLabel">Category Form</h5>
+                    <h5 class="modal-title" id="categoryModalLabel">Form Kategori</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -59,7 +59,7 @@
                         @csrf
                         <input type="hidden" name="id" id="category-id">
                         <div class="mb-3">
-                            <label for="category-name" class="form-label">Category Name</label>
+                            <label for="category-name" class="form-label">Nama Kategori</label>
                             <input type="text" class="form-control" id="category-name" name="name" required>
                         </div>
                     </form>
@@ -134,7 +134,7 @@
 
         // Open the Create Category form
         $('#open-create-form').on('click', function() {
-            $('#categoryModalLabel').text('Create Category');
+            $('#categoryModalLabel').text('Buat Kategori');
             $('#category-form')[0].reset(); // Clear form
             $('#category-id').val(''); // Clear hidden id field
             $('#categoryModal').modal('show');
@@ -144,7 +144,7 @@
         $(document).on('click', '.edit-category', function() {
             const categoryId = $(this).data('id');
             const categoryName = $(this).data('name');
-            $('#categoryModalLabel').text('Edit Category');
+            $('#categoryModalLabel').text('Ubah Kategori');
             $('#category-id').val(categoryId);
             $('#category-name').val(categoryName);
             $('#categoryModal').modal('show');
@@ -164,7 +164,7 @@
                 data: formData,
                 success: function(response) {
                     // Show success message
-                    $('#success-message').removeClass('d-none').text('Category saved successfully!');
+                    $('#success-message').removeClass('d-none').text('Kategori berhasil disimpan!');
 
                     // Hide success message after 3 seconds
                     setTimeout(function() {
@@ -175,7 +175,7 @@
                     fetchCategories();  // Reload the table after saving
                 },
                 error: function(xhr) {
-                    alert('An error occurred while saving the category.');
+                    alert('ada kesalahan ketika menyimpan kategori.');
                 }
             });
         });
@@ -186,7 +186,7 @@
             const categoryName = $(this).data('name');
 
             // Confirm before deletion
-            if (confirm(`Are you sure you want to delete the category "${categoryName}"?`)) {
+            if (confirm(`anda yakin ingin menghapus kategori "${categoryName}"?`)) {
                 $.ajax({
                     url: `/categories/${categoryId}`,
                     method: 'DELETE',
@@ -195,7 +195,7 @@
                     },
                     success: function(response) {
                         // Show success message
-                        $('#success-message').removeClass('d-none').text('Category deleted successfully!');
+                        $('#success-message').removeClass('d-none').text('Kategori berhasil dihapus!');
 
                         // Hide success message after 3 seconds
                         setTimeout(function() {
@@ -205,7 +205,7 @@
                         fetchCategories(); // Reload the table after deletion
                     },
                     error: function(xhr) {
-                        alert('An error occurred while deleting the category.');
+                        alert('terjadi kesalahan ketika menghapus kategori.');
                     }
                 });
             }

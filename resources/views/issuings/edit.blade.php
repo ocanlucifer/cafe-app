@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-md-8">
-            <h3 class="display-6">Edit Issuing Transaction</h3>
+            <h3 class="display-6">Ubah Transaksi Pengeluaran Barang</h3>
         </div>
         <div class="col-md-4 text-end">
             <a href="{{ route('issuings.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-chevron-left"></i>
-                Back to Transaction List
+                Kembali ke Daftar Transaksi
             </a>
         </div>
     </div>
@@ -37,7 +37,7 @@
         {{-- User and Transaction Date --}}
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="transaction_date" class="form-label">Transaction Date</label>
+                <label for="transaction_date" class="form-label">Tanggal Transaksi</label>
                 <input type="datetime-local" name="transaction_date" id="transaction_date" class="form-control"
                     value="{{ old('transaction_date', $issuing->transaction_date->format('Y-m-d\TH:i')) }}" required>
             </div>
@@ -45,15 +45,15 @@
 
         {{-- Remarks --}}
         <div class="mb-3">
-            <label for="remarks" class="form-label">Remarks</label>
+            <label for="remarks" class="form-label">Catatan</label>
             <textarea name="remarks" id="remarks" class="form-control" rows="3">{{ old('remarks', $issuing->remarks) }}</textarea>
         </div>
 
         {{-- Item Details --}}
         <div class="d-flex justify-content-between align-items-center">
-            <h3>Item Details</h3>
+            <h3>Daftar Barang</h3>
             <button type="button" id="add-item" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-circle"></i> Add Item
+                <i class="bi bi-plus-circle"></i> Tambah Barang
             </button>
         </div>
 
@@ -62,9 +62,9 @@
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
-                        <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Action</th>
+                        <th>Nama Barang</th>
+                        <th>Qty</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="items-container">
@@ -93,7 +93,7 @@
                         </tr>
                     @empty
                         <tr id="empty-row">
-                            <td colspan="4" class="text-center">No items added</td>
+                            <td colspan="4" class="text-center">Belum ada barang yang di tambahkan</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -102,11 +102,11 @@
 
         {{-- Total Quantity --}}
         <div class="mb-3">
-            <label for="total_quantity" class="form-label">Total Quantity</label>
+            <label for="total_quantity" class="form-label">Total Qty</label>
             <input type="number" name="total_quantity" id="total_quantity" class="form-control" readonly value="0">
         </div>
 
-        <button type="submit" class="btn btn-success">Update Issuing</button>
+        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
     </form>
 </div>
 
@@ -157,7 +157,7 @@
             if (document.querySelectorAll('#items-container tr').length === 0) {
                 document.getElementById('items-container').innerHTML = `
                     <tr id="empty-row">
-                        <td colspan="4" class="text-center">No items added</td>
+                        <td colspan="4" class="text-center">Belum ad barang yang ditambahkan</td>
                     </tr>
                 `;
             }

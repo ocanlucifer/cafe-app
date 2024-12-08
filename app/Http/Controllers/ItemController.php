@@ -91,8 +91,8 @@ class ItemController extends Controller
             'user_id' => Auth::User()->id,
         ]);
 
-        // return redirect()->route('items.index')->with('success', 'Item created successfully.');
-        return response()->json(['success' => 'Item Created successfully.']);
+        // return redirect()->route('items.index')->with('success', 'Data Barang Berhasil di Simpan.');
+        return response()->json(['success' => 'Data Barang Berhasil di Simpan.']);
     }
 
     public function edit(Item $item)
@@ -128,15 +128,15 @@ class ItemController extends Controller
         //     'active' => 'required|boolean', // Validasi kolom active
         // ]);
         // $item->update($request->all());
-        // return redirect()->route('items.index')->with('success', 'Item updated successfully.');
-        return response()->json(['success' => 'Item updated successfully.']);
+        // return redirect()->route('items.index')->with('success', 'Data Barang Berhasil Di Ubah.');
+        return response()->json(['success' => 'Data Barang Berhasil Di Ubah.']);
     }
 
     public function destroy(Item $item)
     {
         $item->delete();
-        // return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
-        return response()->json(['success' => 'Item deleted successfully.']);
+        // return redirect()->route('items.index')->with('success', 'Data Barang Berhasil Di Hapus.');
+        return response()->json(['success' => 'Data Barang Berhasil Di Hapus.']);
     }
 
     public function toggleActive(Item $item)
@@ -146,7 +146,7 @@ class ItemController extends Controller
         $item->save();
 
         // return redirect()->route('items.index');
-        return response()->json(['success' => 'Item status updated successfully.']);
+        return response()->json(['success' => 'Status Barang Sudah Di Perbarui.']);
     }
 
 }

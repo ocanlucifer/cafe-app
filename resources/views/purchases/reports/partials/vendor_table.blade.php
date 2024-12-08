@@ -2,8 +2,8 @@
     <thead class="table-dark">
         <tr>
             <th>No.</th>
-            <th>Vendors</th>
-            <th>Total Amount</th>
+            <th>Supplier</th>
+            <th>Nilai Transaksi</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
 <!-- Pagination Links -->
 <div class="d-flex justify-content-between align-items-center mt-3">
     <span class="text-muted">
-        Showing {{ $purchases->firstItem() }} to {{ $purchases->lastItem() }} of {{ $purchases->total() }} Vendors
+        Menampilkan {{ $purchases->firstItem() }} sampai {{ $purchases->lastItem() }} dari {{ $purchases->total() }} Supplier
     </span>
 
     <div>

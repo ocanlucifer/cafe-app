@@ -10,16 +10,16 @@
     </style>
 </head>
 <body>
-    <h1>Sales Report (Per Customer)</h1>
-    <p><strong>Period:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
+    <h1>Laporan Penjualan (Per Pelanggan)</h1>
+    <p><strong>Periode:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
     <table>
         <thead>
             <tr>
                 <th>No.</th>
-                <th>Customer</th>
-                <th>Total Sales</th>
-                <th>Total Discount</th>
-                <th>Total After Discount</th>
+                <th>Nama Pelanggan</th>
+                <th>Total Penjualan</th>
+                <th>Total Diskon</th>
+                <th>Total Nilai Transaksi</th>
             </tr>
         </thead>
         <tbody>

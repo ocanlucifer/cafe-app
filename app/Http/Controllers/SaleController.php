@@ -175,7 +175,7 @@ class SaleController extends Controller
                 return $sale->id;
             });
 
-        session()->flash('success', 'Transaksi berhasil dibuat!');
+        session()->flash('success', 'Transaksi Penjualan berhasil dibuat!');
 
         return redirect()->route('sales.show',$id);
     }
@@ -235,7 +235,7 @@ class SaleController extends Controller
         }
 
         // Redirect kembali ke halaman daftar transaksi dengan pesan sukses
-        session()->flash('success', 'Transaction updated successfully');
+        session()->flash('success', 'Transaksi Penjualan berhasil di ubah');
 
         return redirect()->route('sales.show', $id);
     }
@@ -261,7 +261,7 @@ class SaleController extends Controller
     {
         $sale->delete();
 
-        session()->flash('success', 'Transaksi berhasil dihapus!');
+        session()->flash('success', 'Transaksi Penjualan berhasil dihapus!');
 
         return redirect()->route('sales.index');
     }

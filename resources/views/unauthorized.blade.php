@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-md-8">
-            <h3 class="display-6">Unauthorized Access</h3>
+            <h3 class="display-6">Akses tidak Dikenal</h3>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
             {!! session('error') !!}
         </div>
     @endif
-    <a href="{{ url('/') }}">Back to Home</a>
+    <a href="{{ url('/') }}">Kembali ke halaman Utama</a>
 </div>
 
 @endsection

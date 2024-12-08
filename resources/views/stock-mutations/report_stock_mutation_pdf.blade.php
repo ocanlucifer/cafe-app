@@ -10,17 +10,17 @@
     </style>
 </head>
 <body>
-    <h1>Stock Mutations Report</h1>
-    <p><strong>Period:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
+    <h1>Laporan Mutasi Stock</h1>
+    <p><strong>Periode:</strong> {{ $fromDate->format('d M Y') }} - {{ $toDate->format('d M Y') }}</p>
     <table>
         <thead>
             <tr>
                 <th>No.</th>
-                <th>Item</th>
-                <th>Begin Quantity</th>
-                <th>In Quantity</th>
-                <th>Out Quantity</th>
-                <th>End Quantity</th>
+                <th>Nama Barang</th>
+                <th>Qty Awal</th>
+                <th>Qty Masuk</th>
+                <th>Qty Keluar</th>
+                <th>Qty Akhir</th>
             </tr>
         </thead>
         <tbody>

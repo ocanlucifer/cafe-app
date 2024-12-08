@@ -2,9 +2,9 @@
     <thead class="table-dark">
         <tr>
             <th>No.</th>
-            <th>Item</th>
-            <th>Total Quantity</th>
-            <th>Total Amount</th>
+            <th>Nama Barang</th>
+            <th>Total Qty</th>
+            <th>Nilai Transaksi</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
 <!-- Pagination Links -->
 <div class="d-flex justify-content-between align-items-center mt-3">
     <span class="text-muted">
-        Showing {{ $items->firstItem() }} to {{ $items->lastItem() }} of {{ $items->total() }} Items
+        Menampilkan {{ $items->firstItem() }} sampai {{ $items->lastItem() }} dari {{ $items->total() }} Barang
     </span>
 
     <div>

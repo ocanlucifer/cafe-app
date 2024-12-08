@@ -57,7 +57,7 @@ class TypeController extends Controller
             'user_id' => Auth::User()->id,
         ]);
         // return redirect()->route('types.index')->with('success', 'Type created successfully.');
-        return response()->json(['message' => 'Category created successfully!'], 201);
+        return response()->json(['message' => 'Data Tipe Berhasil Di Buat!'], 201);
     }
 
     public function edit(Type $type)
@@ -73,14 +73,14 @@ class TypeController extends Controller
             'user_id' => Auth::User()->id,
         ]);
         // return redirect()->route('types.index')->with('success', 'Type updated successfully.');
-        return response()->json(['message' => 'Category updated successfully!'], 200);
+        return response()->json(['message' => 'Data Tipe Berhasil Di Ubah!'], 200);
     }
 
     public function destroy(Type $type)
     {
         $type->delete();
         // return redirect()->route('types.index')->with('success', 'Type deleted successfully.');
-        return response()->json(['message' => 'Category deleted successfully!'], 200);
+        return response()->json(['message' => 'Data Tipe Berhasil di hapus!'], 200);
     }
 }
 

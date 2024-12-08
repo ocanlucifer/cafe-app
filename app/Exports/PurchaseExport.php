@@ -24,14 +24,14 @@ class PurchaseExport implements FromCollection, WithHeadings
         foreach ($this->purchases as $purchase) {
             foreach ($purchase->details as $detail) {
                 $data[] = [
-                    'Transaction Number' => $purchase->transaction_number,
-                    'Vendor' => $purchase->vendor->name,
-                    'Item Name' => $detail->item->name,
-                    'Price' => $detail->price,
+                    'Nomor Transaksi' => $purchase->transaction_number,
+                    'Supplier' => $purchase->vendor->name,
+                    'Nama Barang' => $detail->item->name,
+                    'Harga' => $detail->price,
                     'Quantity' => $detail->quantity,
                     'Subtotal' => $detail->total_price,
-                    'Total Price' => $purchase->total_amount,
-                    'Date' => $purchase->created_at->format('d-m-Y'),
+                    'Total Harga' => $purchase->total_amount,
+                    'Tanggal' => $purchase->created_at->format('d-m-Y'),
                 ];
             }
         }
@@ -42,7 +42,7 @@ class PurchaseExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Transaction Number', 'Vendor', 'Item Name', 'Price', 'Quantity', 'Subtotal', 'Total Price', 'Date',
+            'Nomor Transaksi', 'Supplier', 'Nama Barang', 'Harga', 'Quantity', 'Subtotal', 'Total Harga', 'Tanggal',
         ];
     }
 }

@@ -4,29 +4,29 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-md-8">
-            <h3 class="display-6">Transaction Details #{{ $purchase->transaction_number }}</h3>
-            <p class="lead">Date: {{ \Carbon\Carbon::parse($purchase->purchase_date)->format('d M Y, H:i') }}</p>
+            <h3 class="display-6">Detail Transaksi #{{ $purchase->transaction_number }}</h3>
+            <p class="lead">Tanggal: {{ \Carbon\Carbon::parse($purchase->purchase_date)->format('d M Y, H:i') }}</p>
         </div>
         <div class="col-md-4 text-end">
             <a href="{{ route('purchases.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-chevron-left"></i>
                 <i class="fas fa-chevron-left"></i>
-                Back to Transaction List
+                Kembali ke daftar transaksi
             </a>
             {{-- Print Button --}}
             {{-- <button class="btn btn-success btn-sm" onclick="openPopup('{{ route('purchases.print-pdf', $purchase->id) }}')">
                 <i class="bi bi-printer"></i> Print Receipt
             </button> --}}
             {{-- Edit Button --}}
-            <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit Transaction">
+            <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Ubah Transaksi">
                 <i class="bi bi-pencil"></i>
             </a>
 
             {{-- Delete Button --}}
-            <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this transaction?')">
+            <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('anda yakin ingin menghapus transaksi ini?')">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Delete Transaction">
+                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Transaksi">
                     <i class="bi bi-trash"></i>
                 </button>
             </form>
@@ -39,12 +39,12 @@
         <div class="col-md-6">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-light">
-                    <h6 class="mb-0 text-primary">Vendor Info</h6>
+                    <h6 class="mb-0 text-primary">Informasi Supplier</h6>
                 </div>
                 <div class="card-body">
-                    <p class="mb-2"><strong>Name:</strong> {{ $purchase->vendor->name }}</p>
-                    <p class="mb-2"><strong>Address:</strong> {{ $purchase->vendor->address ?? 'No address provided' }}</p>
-                    <p class="mb-0"><strong>Contact:</strong> {{ $purchase->vendor->contact ?? 'No contact provided' }}</p>
+                    <p class="mb-2"><strong>Nama:</strong> {{ $purchase->vendor->name }}</p>
+                    <p class="mb-2"><strong>Alamat:</strong> {{ $purchase->vendor->address ?? 'tidak ada alamat yang di berikan' }}</p>
+                    <p class="mb-0"><strong>Kontak:</strong> {{ $purchase->vendor->contact ?? 'tidak ada kontak yang di berikan' }}</p>
                 </div>
             </div>
         </div>
@@ -53,15 +53,15 @@
         <div class="col-md-6">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white">
-                    <h6 class="mb-0">Transaction Summary</h6>
+                    <h6 class="mb-0">Rekap Transaksi</h6>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span><strong>Total Amount:</strong></span>
+                        <span><strong>Nilai Transaksi:</strong></span>
                         <span class="text-end">Rp {{ number_format($purchase->total_amount, 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span><strong>Purchase Date:</strong></span>
+                        <span><strong>Tanggal Pembelian:</strong></span>
                         <span class="text-end">{{ \Carbon\Carbon::parse($purchase->purchase_date)->format('d M Y') }}</span>
                     </div>
                 </div>
@@ -71,16 +71,16 @@
 
     {{-- Item Details --}}
     <div class="mb-4">
-        <h3 class="mb-3">Item Details</h3>
+        <h3 class="mb-3">Daftar Barang</h3>
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped align-middle">
                 <thead class="table-dark text-center">
                     <tr>
                         <th>#</th>
-                        <th>Item Name</th>
-                        <th>Price</th>
+                        <th>Nama Barang</th>
+                        <th>Harga</th>
                         <th>Qty</th>
-                        <th>Total Price</th>
+                        <th>Total Harga</th>
                     </tr>
                 </thead>
                 <tbody>

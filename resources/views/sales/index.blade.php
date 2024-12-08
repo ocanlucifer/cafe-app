@@ -3,15 +3,15 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Transaction List</h1>
-        <a href="{{ route('sales.create') }}" class="btn btn-primary btn-sm">Create New Transaction</a>
+        <h1 class="mb-0">Daftar Transaksi Pembelian</h1>
+        <a href="{{ route('sales.create') }}" class="btn btn-primary btn-sm">Buat Transaksi Pembelian</a>
     </div>
 
     <!-- Filter, Sort, and Search Form -->
     <form id="filter-form" class="mb-4">
         <div class="row g-2 justify-content-end">
             <div class="col-md-3 col-sm-12">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search by transaction number or customer name" id="search" value="{{ $search }}">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari berdasarkan Nomor Transaksi atau Nama Pelanggan" id="search" value="{{ $search }}">
             </div>
             <div class="col-md-2 col-sm-6">
                 <input type="date" name="from_date" class="form-control form-control-sm" value="{{ $fromDate }}">

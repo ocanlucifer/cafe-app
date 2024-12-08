@@ -50,7 +50,7 @@ class VendorController extends Controller
         $request->merge(['user_id' => Auth::User()->id]);
         Vendor::create($request->all());
         // return redirect()->route('vendors.index')->with('success', 'Vendor created successfully.');
-        return response()->json(['success' => 'Vendor created successfully.']);
+        return response()->json(['success' => 'Data Supplier Berhasil di Simpan.']);
     }
 
     public function edit(Vendor $vendor)
@@ -69,14 +69,14 @@ class VendorController extends Controller
         $request->merge(['user_id' => Auth::User()->id]);
         $vendor->update($request->all());
         // return redirect()->route('vendors.index')->with('success', 'Vendor updated successfully.');
-        return response()->json(['success' => 'Vendor updated successfully.']);
+        return response()->json(['success' => 'Data Supplier Berhasil di Ubah.']);
     }
 
     public function destroy(Vendor $vendor)
     {
         $vendor->delete();
         // return redirect()->route('vendors.index')->with('success', 'Vendor deleted successfully.');
-        return response()->json(['success' => 'Vendor deleted successfully.']);
+        return response()->json(['success' => 'Data Supplier Berhasil Di Hapus.']);
     }
 
     // Toggle the active status of a vendor
@@ -86,6 +86,6 @@ class VendorController extends Controller
         $vendor->save();
 
         // return redirect()->route('vendors.index')->with('success', 'Vendor status updated.');
-        return response()->json(['success' => 'Vendor status updated successfully.']);
+        return response()->json(['success' => 'Status Supplier Berhasil Di Perbarui.']);
     }
 }
