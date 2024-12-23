@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Daftar Transaksi Pembelian</h1>
-        <a href="{{ route('sales.create') }}" class="btn btn-primary btn-sm">Buat Transaksi Pembelian</a>
+        <h1 class="mb-0">Daftar Transaksi Penjualan</h1>
+        <a href="{{ route('sales.create') }}" class="btn btn-primary btn-sm">Buat Transaksi Penjualan</a>
     </div>
 
     <!-- Filter, Sort, and Search Form -->
