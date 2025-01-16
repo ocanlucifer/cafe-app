@@ -101,6 +101,21 @@
             </table>
         </div>
 
+        {{-- Payment Section --}}
+        <div id="payment-section" class="mt-5">
+            <h3>Pembayaran</h3>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="payment-amount" class="form-label">Jumlah Pembayaran</label>
+                    <input type="number" id="payment-amount" name="payment_amount" class="form-control" placeholder="Masukkan jumlah pembayaran" min="0" step="0.01" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="change-amount" class="form-label">Kembalian</label>
+                    <input type="text" id="change-amount" class="form-control" value="Rp 0.00" name="change_amount" readonly>
+                </div>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-success">Simpan Transaksi</button>
     </form>
 </div>
@@ -173,6 +188,7 @@
     // Update Summary
     document.getElementById('items-container').addEventListener('input', updateSummary);
     document.getElementById('discount').addEventListener('input', updateSummary);
+    document.getElementById('payment-amount').addEventListener('input', updateChange);
 
     function updateSummary() {
         let totalBeforeDiscount = 0;
@@ -199,6 +215,28 @@
         document.getElementById('total-discount-item').textContent = totalDiscountItem.toLocaleString('id-ID', { minimumFractionDigits: 2 });
         document.getElementById('total-header-discount').textContent = headerDiscount.toLocaleString('id-ID', { minimumFractionDigits: 2 });
         document.getElementById('grand-total').textContent = grandTotal.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+
+        updateChange();
     }
+
+    function updateChange() {
+        const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace(/\./g, '').replace(',', '.')) || 0;
+        const paymentAmount = parseFloat(document.getElementById('payment-amount').value || 0);
+
+        const change = paymentAmount - grandTotal;
+        document.getElementById('change-amount').value = `Rp ${change.toLocaleString('id-ID', { minimumFractionDigits: 2 })}`;
+    }
+
+    // Validasi sebelum submit form
+    document.getElementById('transaction-form').addEventListener('submit', (e) => {
+        const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace(/\./g, '').replace(',', '.')) || 0;
+        const paymentAmount = parseFloat(document.getElementById('payment-amount').value || 0);
+
+        if (paymentAmount < grandTotal) {
+            e.preventDefault(); // Mencegah submit form
+            alert('Jumlah pembayaran kurang dari total nilai transaksi. Harap masukkan pembayaran yang cukup.');
+        }
+    });
+
 </script>
 @endsection

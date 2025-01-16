@@ -55,6 +55,16 @@
             <span>Rp {{ number_format($totalPriceAfterDiscount, 2) }}</span>
         </div>
         <hr style="margin: 5px 0;">
+        <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; padding: 3px;">
+            <span>Pembayaran:</span>
+            <span>Rp {{ number_format($sale->payment_amount, 2) }}</span>
+        </div>
+        <hr style="margin: 5px 0;">
+        <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; padding: 3px;">
+            <span>Kembalian:</span>
+            <span>Rp {{ number_format($sale->change_amount, 2) }}</span>
+        </div>
+        <hr style="margin: 5px 0;">
         <div style="text-align: center; font-size: 10px; margin-top: 10px;">
             <small>Terimakasih sudah menikmati menu kami!</small>
         </div>

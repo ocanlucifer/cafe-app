@@ -15,6 +15,8 @@ class Sale extends Model
         'discount',
         'transaction_number',
         'user_id',
+        'payment_amount',
+        'change_amount',
     ];
 
     protected static function boot()

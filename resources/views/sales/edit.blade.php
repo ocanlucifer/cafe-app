@@ -133,6 +133,24 @@
             </table>
         </div>
 
+
+        {{-- Payment Section --}}
+        <div id="payment-section" class="mt-5">
+            <h3>Pembayaran</h3>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="payment-amount" class="form-label">Jumlah Pembayaran</label>
+                    <input type="number" id="payment-amount" name="payment_amount" class="form-control" placeholder="Masukkan jumlah pembayaran" min="0" step="0.01" value="{{ $sale->payment_amount }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="change-amount" class="form-label">Kembalian</label>
+                    <input type="text" id="change-amount" class="form-control" value="Rp 0.00" name="payment_change" readonly>
+                </div>
+            </div>
+
+            {{-- Hidden field to store the actual change amount without currency symbol --}}
+            <input type="hidden" id="payment-change" name="change_amount" value="0.00">
+        </div>
         <button type="submit" class="btn btn-success">Simpan Perubahan</button>
     </form>
 </div>
@@ -205,6 +223,7 @@
     // Update Summary
     document.getElementById('items-container').addEventListener('input', updateSummary);
     document.getElementById('discount').addEventListener('input', updateSummary);
+    document.getElementById('payment-amount').addEventListener('input', updateChange);
 
     function updateSummary() {
         let totalBeforeDiscount = 0;
@@ -212,25 +231,54 @@
 
         document.querySelectorAll('#items-container tr').forEach(row => {
             const price = parseFloat(row.querySelector('select option:checked')?.getAttribute('data-price') || 0);
-            const quantity = parseInt(row.querySelector('.item-quantity').value || 0);
-            const discount = parseFloat(row.querySelector('.item-discount').value || 0);
-            const subtotal = (price * quantity) - discount;
+            const quantity = parseInt(row.querySelector('.item-quantity')?.value || 0);
+            const discount = parseFloat(row.querySelector('.item-discount')?.value || 0);
 
-            row.querySelector('.item-price').textContent = `Rp ${price.toFixed(2)}`;
-            row.querySelector('.item-subtotal').textContent = `Rp ${subtotal.toFixed(2)}`;
-
-            totalBeforeDiscount += (price * quantity);
+            totalBeforeDiscount += price * quantity;
             totalDiscountItem += discount;
+
+            // Update Unit Price and Subtotal
+            row.querySelector('.item-price').textContent = `Rp ${price.toLocaleString('id-ID', { minimumFractionDigits: 2 })}`;
+            const subtotal = (price * quantity) - discount;
+            row.querySelector('.item-subtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID', { minimumFractionDigits: 2 })}`;
         });
 
         const headerDiscount = parseFloat(document.getElementById('discount').value || 0);
         const grandTotal = totalBeforeDiscount - totalDiscountItem - headerDiscount;
 
-        document.getElementById('total-before-discount').textContent = totalBeforeDiscount.toFixed(2);
-        document.getElementById('total-discount-item').textContent = totalDiscountItem.toFixed(2);
-        document.getElementById('total-header-discount').textContent = headerDiscount.toFixed(2);
-        document.getElementById('grand-total').textContent = grandTotal.toFixed(2);
+        document.getElementById('total-before-discount').textContent = totalBeforeDiscount.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+        document.getElementById('total-discount-item').textContent = totalDiscountItem.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+        document.getElementById('total-header-discount').textContent = headerDiscount.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+        document.getElementById('grand-total').textContent = grandTotal.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+
+        updateChange();
     }
+
+    function updateChange() {
+    // Mengambil nilai grand total dan menghapus simbol Rp serta memformat ulang simbol ribuan dan desimal
+    const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('Rp ', '').replace(/\./g, '').replace(',', '.') || 0);
+    const paymentAmount = parseFloat(document.getElementById('payment-amount').value || 0);
+
+    const change = paymentAmount - grandTotal;
+
+    // Menampilkan hasil kembalian dalam format Rp
+    document.getElementById('change-amount').value = `Rp ${change.toLocaleString('id-ID', { minimumFractionDigits: 2 })}`;
+
+    // Memperbarui hidden field dengan nilai kembalian asli tanpa simbol Rp
+    document.getElementById('payment-change').value = change.toFixed(2);
+}
+
+
+    // Validasi sebelum submit form
+    document.getElementById('transaction-form').addEventListener('submit', (e) => {
+        const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace(/\./g, '').replace(',', '.')) || 0;
+        const paymentAmount = parseFloat(document.getElementById('payment-amount').value || 0);
+
+        if (paymentAmount < grandTotal) {
+            e.preventDefault(); // Mencegah submit form
+            alert('Jumlah pembayaran kurang dari total nilai transaksi. Harap masukkan pembayaran yang cukup.');
+        }
+    });
 
     // Initialize Summary on Load
     updateSummary();
