@@ -94,6 +94,16 @@
                         <span><strong>Total Nilai Transaksi:</strong></span>
                         <span class="text-end h5 text-success">Rp {{ number_format($totalPriceAfterDiscount, 2) }}</span>
                     </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><strong>Pembayaran:</strong></span>
+                        <span class="text-end text-success">Rp {{ number_format($sale->payment_amount, 2) }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><strong>Kembalian:</strong></span>
+                        <span class="text-end text-success">Rp {{ number_format($sale->change_amount, 2) }}</span>
+                    </div>
                 </div>
             </div>
         </div>
