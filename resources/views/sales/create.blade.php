@@ -102,7 +102,7 @@
         </div>
 
         {{-- Payment Section --}}
-        <div id="payment-section" class="mt-5">
+        {{-- <div id="payment-section" class="mt-5">
             <h3>Pembayaran</h3>
             <div class="row mb-3">
                 <div class="col-md-4">
@@ -114,6 +114,24 @@
                     <input type="text" id="change-amount" class="form-control" value="Rp 0.00" name="change_amount" readonly>
                 </div>
             </div>
+        </div> --}}
+
+        {{-- Payment Section --}}
+        <div id="payment-section" class="mt-5">
+            <h3>Pembayaran</h3>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="payment-amount" class="form-label">Jumlah Pembayaran</label>
+                    <input type="number" id="payment-amount" name="payment_amount" class="form-control" placeholder="Masukkan jumlah pembayaran" min="0" step="0.01" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="change-amount" class="form-label">Kembalian</label>
+                    <input type="text" id="change-amount" class="form-control" value="Rp 0.00" name="payment_change" readonly>
+                </div>
+            </div>
+
+            {{-- Hidden field to store the actual change amount without currency symbol --}}
+            <input type="hidden" id="payment-change" name="change_amount" value="0.00">
         </div>
 
         <button type="submit" class="btn btn-success">Simpan Transaksi</button>
@@ -219,12 +237,26 @@
         updateChange();
     }
 
+    // function updateChange() {
+    //     const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace(/\./g, '').replace(',', '.')) || 0;
+    //     const paymentAmount = parseFloat(document.getElementById('payment-amount').value || 0);
+
+    //     const change = paymentAmount - grandTotal;
+    //     document.getElementById('change-amount').value = `Rp ${change.toLocaleString('id-ID', { minimumFractionDigits: 2 })}`;
+    // }
+
     function updateChange() {
-        const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace(/\./g, '').replace(',', '.')) || 0;
+        // Mengambil nilai grand total dan menghapus simbol Rp serta memformat ulang simbol ribuan dan desimal
+        const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('Rp ', '').replace(/\./g, '').replace(',', '.') || 0);
         const paymentAmount = parseFloat(document.getElementById('payment-amount').value || 0);
 
         const change = paymentAmount - grandTotal;
+
+        // Menampilkan hasil kembalian dalam format Rp
         document.getElementById('change-amount').value = `Rp ${change.toLocaleString('id-ID', { minimumFractionDigits: 2 })}`;
+
+        // Memperbarui hidden field dengan nilai kembalian asli tanpa simbol Rp
+        document.getElementById('payment-change').value = change.toFixed(2);
     }
 
     // Validasi sebelum submit form
