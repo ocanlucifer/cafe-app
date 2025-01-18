@@ -124,8 +124,8 @@ class SaleController extends Controller
             'items.*.quantity' => 'required|integer|min:1',
             'items.*.discount' => 'nullable|numeric|min:0',
             'discount' => 'nullable|numeric|min:0', // Diskon header
-            'payment_amount' => 'required|numeric|min:0|gte:grand_total', // Payment must be greater than or equal to grand total
-            'change_amount' => 'required|numeric|min:0|lte:payment_amount', // Change must be less than or equal to payment amount
+            'payment_amount' => 'required|numeric|min:0',//|gte:grand_total', // Payment must be greater than or equal to grand total
+            'change_amount' => 'required|numeric|min:0',//|lte:payment_amount', // Change must be less than or equal to payment amount
         ]);
         // Mulai transaksi database
         $id = DB::transaction(function () use ($validatedData) {
@@ -153,7 +153,7 @@ class SaleController extends Controller
                     'customer_id' => $validatedData['customer_id'],
                     'total_price' => $totalPrice - ($validatedData['discount'] ?? 0), // Total setelah diskon header
                     'discount' => $validatedData['discount'] ?? 0, // Diskon header
-                    'peyment_amount'    => $validatedData['payment_mount'],
+                    'peyment_amount'    => $validatedData['payment_amount'],
                     'change_amount'     => $validatedData['change_amount'],
                     'user_id' => Auth::User()->id,
                     // 'transaction_number' => Sale::generateTransactionNumber(), // Nomor transaksi unik
