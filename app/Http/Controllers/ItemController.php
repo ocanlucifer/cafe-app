@@ -87,6 +87,7 @@ class ItemController extends Controller
             'type_id'       => $request->type_id,
             'price'         => $request->price,
             'stock'         => 0,
+            'unit'          => $request->unit,
             'active'        => $request->active ?? true,
             'user_id' => Auth::User()->id,
         ]);
@@ -116,6 +117,7 @@ class ItemController extends Controller
             'category_id'   => $request->category_id,
             'type_id'       => $request->type_id,
             'price'         => $request->price,
+            'unit'          => $request->unit,
             'active'        => $request->active ?? true,
             'user_id' => Auth::User()->id,
         ]);

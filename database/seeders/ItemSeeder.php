@@ -33,6 +33,8 @@ class ItemSeeder extends Seeder
             'Minuman Energi', 'Minuman Lemon', 'Es Krim', 'Sirup Gula', 'Minuman Kopi'
         ];
 
+        $unitItems = ['Pcs','KG','Gram','Liter','Ml','Box','Botol'];
+
         // Gabungkan kedua daftar (Bahan Makanan dan Minuman)
         $allItems = array_merge($foodItems, $drinkItems);
         $existingNames = [];
@@ -42,6 +44,8 @@ class ItemSeeder extends Seeder
         for ($i = 0; $i < 100; $i++) {
             // Pilih bahan dari daftar yang sudah disediakan
             $itemName = $faker->randomElement($allItems);
+
+            $unit = $faker->randomElement($unitItems);
 
             // 70% chance of type_id = 2 (minuman), 30% chance of type_id = 1 (makanan)
             $type_id = ($i < 70) ? 2 : 1;
@@ -58,6 +62,7 @@ class ItemSeeder extends Seeder
                     'type_id' => $type_id,                        // ID tipe (minuman atau makanan)
                     'price' => $faker->randomFloat(2, 5000, 10000),    // Harga acak antara 5000 dan 10000
                     'stock' => 0,                                 // Set stok awal ke 0
+                    'unit'  => $unit,
                     'active' => true,                             // Pastikan status aktif
                     'user_id' => 1,
                     'created_at' => now(),

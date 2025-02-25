@@ -66,7 +66,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="customer-contact" class="form-label">Kontak</label>
-                            <input type="text" class="form-control" id="customer-contact" name="contact" required>
+                            <input type="tel" class="form-control" id="customer-contact" name="contact" required maxlength="15" pattern="^\d{1,15}$" title="Hanya boleh angka dan maksimal 15 karakter">
                         </div>
                         <div class="mb-3">
                             <label for="customer-address" class="form-label">Alamat Planggan</label>

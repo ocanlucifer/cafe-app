@@ -83,6 +83,18 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label for="item-unit" class="form-label">Unit</label>
+                            <select name="unit" id="item-unit" class="form-select" required>
+                                <option value="Pcs">Pcs</option>
+                                <option value="KG">KG</option>
+                                <option value="Gram">Gram</option>
+                                <option value="Liter">Liter</option>
+                                <option value="Ml">Ml</option>
+                                <option value="Box">Box</option>
+                                <option value="Botol">Botol</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="item-price" class="form-label">Harga</label>
                             <input type="text" class="form-control" id="item-price" name="price" required>
                         </div>
@@ -180,6 +192,7 @@
             $('#item-type_id').val(item.type_id);
             $('#item-price').val(item.price);
             $('#item-stock').val(item.stock);
+            $('#item-unit').val(item.unit);
             $('#item-status').val(item.active);
             $('#itemModal').modal('show');
         });

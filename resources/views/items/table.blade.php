@@ -43,6 +43,7 @@
                         @endif
                     </a>
                 </th>
+                <th>Unit</th>
                 <th class="col-1 text-center">
                     <a href="#" class="sortable nav-link" data-sort-by="active" data-order="{{ $order === 'asc' ? 'desc' : 'asc' }}">
                         Status
@@ -64,6 +65,7 @@
                     <td>{{ $item->type->name }}</td>
                     <td>{{ number_format($item->price, 2) }}</td>
                     <td>{{ $item->stock }}</td>
+                    <td>{{ $item->unit }}</td>
                     <td class="text-center">
                         <span class="badge {{ $item->active ? 'bg-success' : 'bg-danger' }}">
                             {{ $item->active ? 'Aktif' : 'Nonaktif' }}
@@ -71,7 +73,7 @@
                     </td>
                     <td>{{ $item->user->name }}</td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-warning edit-item" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-category_id="{{ $item->category_id }}" data-type_id="{{ $item->type_id }}" data-price="{{ $item->price }}" data-stock="{{ $item->stock }}" data-active="{{ $item->active }}" data-bs-toggle="tooltip" title="Ubah Data Barang">
+                        <button class="btn btn-sm btn-warning edit-item" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-category_id="{{ $item->category_id }}" data-type_id="{{ $item->type_id }}" data-price="{{ $item->price }}" data-stock="{{ $item->stock }}" data-unit="{{ $item->unit }}" data-active="{{ $item->active }}" data-bs-toggle="tooltip" title="Ubah Data Barang">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                         <button class="btn btn-sm btn-danger delete-item" data-id="{{ $item->id }}" data-bs-toggle="tooltip" title="Hapus Data Barang">

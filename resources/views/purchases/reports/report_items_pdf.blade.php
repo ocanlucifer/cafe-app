@@ -18,6 +18,7 @@
                 <th>No.</th>
                 <th>Nama Barang</th>
                 <th>Total Qty</th>
+                <th>Unit</th>
                 <th>Nilai Transaksi</th>
             </tr>
         </thead>
@@ -27,6 +28,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->total_quantity }}</td>
+                <td>{{ $item->unit }}</td>
                 <td>Rp {{ number_format($item->total_price, 2) }}</td>
             </tr>
             @endforeach

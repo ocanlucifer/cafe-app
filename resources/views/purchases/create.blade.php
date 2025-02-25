@@ -61,6 +61,7 @@
                         <th>Nama Barang</th>
                         <th>Harga</th>
                         <th>Qty</th>
+                        <th>Unit</th>
                         <th>Total Harga</th>
                         <th>Aksi</th>
                     </tr>
@@ -101,7 +102,7 @@
                 <select name="items[${itemIndex}][item_id]" class="form-control item-select" required>
                     <option value="">Pilih Barang</option>
                     @foreach($items as $item)
-                        <option value="{{ $item->id }}" data-price="{{ $item->price }}">{{ $item->name }}</option>
+                        <option value="{{ $item->id }}" data-price="{{ $item->price }}" data-unit="{{ $item->unit }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
             </td>
@@ -110,6 +111,9 @@
             </td>
             <td>
                 <input type="number" name="items[${itemIndex}][quantity]" class="form-control item-quantity" value="1" min="1" required>
+            </td>
+            <td>
+                <input type="text" name="items[${itemIndex}][unit]" class="form-control item-unit" readonly>
             </td>
             <td class="item-total-price">Rp 0.00</td>
             <td>
@@ -150,10 +154,13 @@
             const select = e.target;
             const selectedOption = select.selectedOptions[0];
             const price = parseFloat(selectedOption.getAttribute('data-price') || 0);
+            const unit = selectedOption.getAttribute('data-unit');
 
             // Get the price input for this row and set the price
             const priceInput = select.closest('tr').querySelector('.item-price-input');
+            const unitInput = select.closest('tr').querySelector('.item-unit');
             priceInput.value = price;
+            unitInput.value = unit;
 
             updateTotalAmount();
         }
