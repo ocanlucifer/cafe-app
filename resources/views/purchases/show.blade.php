@@ -80,6 +80,7 @@
                         <th>Nama Barang</th>
                         <th>Harga</th>
                         <th>Qty</th>
+                        <th>Unit</th>
                         <th>Total Harga</th>
                     </tr>
                 </thead>
@@ -90,6 +91,7 @@
                             <td>{{ $detail->item->name }}</td>
                             <td class="text-end">Rp {{ number_format($detail->price, 2) }}</td>
                             <td class="text-center">{{ $detail->quantity }}</td>
+                            <td class="text-center">{{ $detail->item->unit }}</td>
                             <td class="text-end">Rp {{ number_format($detail->total_price, 2) }}</td>
                         </tr>
                     @endforeach

@@ -281,13 +281,13 @@ class PurchaseController extends Controller
 
         if ($group == 'item') {
             // Query untuk grup berdasarkan item
-            $items = Item::select('items.name')
+            $items = Item::select('items.name','items.unit')
                 ->join('purchase_details', 'items.id', '=', 'purchase_details.item_id')
                 ->join('purchase_headers', 'purchase_details.purchase_header_id', '=', 'purchase_headers.id')
                 ->whereBetween('purchase_headers.created_at', [$fromDate, $toDate])
                 ->selectRaw('SUM(purchase_details.quantity) as total_quantity')
                 ->selectRaw('SUM(purchase_details.total_price) as total_price')
-                ->groupBy('items.name')
+                ->groupBy('items.name','items.unit')
                 ->having('total_quantity', '>', 0) // Hanya ambil item dengan total quantity > 0
                 ->paginate($perPage);
 
@@ -378,6 +378,7 @@ class PurchaseController extends Controller
                 if ($totalQuantity > 0) {
                     return (object)[
                         'name' => $item->name,
+                        'unit' => $item->unit,
                         'total_quantity' => $totalQuantity,
                         'total_price' => $total_price
                     ];
